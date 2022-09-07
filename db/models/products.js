@@ -1,0 +1,1 @@
+// table includes product id, name, product description, format, digital or physical, price, image,

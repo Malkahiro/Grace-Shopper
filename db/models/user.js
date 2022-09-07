@@ -9,3 +9,5 @@ module.exports = {
 async function getAllUsers() {
   /* this adapter should fetch a list of users from your db */
 }
+
+// users id, username, password(hash), is_admin, email(hash), address(hash), name
