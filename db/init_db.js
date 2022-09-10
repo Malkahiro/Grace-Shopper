@@ -1,7 +1,9 @@
 const {
   client,
-  // declare your model imports here
-  // for example, User
+  users,
+  products,
+  
+
 } = require('./');
 
 async function buildTables() {
@@ -9,12 +11,39 @@ async function buildTables() {
     client.connect();
 
     // drop tables in correct order
+    console.log("Starting to drop all tables...")
+    await client.query(`
+      DROP TABLE IF EXISTS users;
+    `)
+
+    console.log("Finished dropping all tables!")
 
     // build tables in correct order
+
+    console.log("Starting to create tables...")
+
+    await client.query(`
+      CREATE TABLE users (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL
+      );
+
+      CREATE TABLE products (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        description TEXT NOT NULL,
+        type VARCHAR(255) NOT NULL,
+        format VARCHAR(255) NOT NULL,
+        creator VARCHAR(255) NOT NULL,        
+      )
+    `)
   } catch (error) {
     throw error;
   }
 }
+
+//  genre, digital or physical, price, image,
 
 async function populateInitialData() {
   try {

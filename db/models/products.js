@@ -1,1 +1,1 @@
-// table includes product id, name, product description, format, digital or physical, price, image,
+// table includes product id, name, product description, type(movie, book or album), format, creator (author/director/artist), genre, digital or physical, price, image,
