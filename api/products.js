@@ -1,12 +1,18 @@
 const express = require("express");
-const usersRouter = express.Router();
+const productsRouter = express.Router();
 const {
 Product
 } = require("../db/index");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const { JWT_SECRET } = process.env;
 
-//code here
 
-module.exports = usersRouter;
+productsRouter.get('/', async (req, res, next) => {
+    try {
+      const response = await Product.getAllProducts();
+  
+      res.send(response);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+module.exports = productsRouter;
