@@ -42,6 +42,7 @@ const Login = () => {
             Login To Account
           </h1>
           <div className="form-floating">
+          <label htmlFor="floatingInput">Username</label>
             <input
               type="text"
               className="form-control"
@@ -49,9 +50,9 @@ const Login = () => {
               placeholder="username"
             //   onChange={(event) => setUsername(event.target.value)}
             />
-            <label htmlFor="floatingInput">Username</label>
           </div>
           <div className="form-floating">
+          <label htmlFor="floatingPassword">Password</label>
             <input
               type="password"
               className="form-control"
@@ -59,7 +60,6 @@ const Login = () => {
               placeholder="Password"
             //   onChange={(event) => setPassword(event.target.value)}
             />
-            <label htmlFor="floatingPassword">Password</label>
           </div>
           <button
             id="submit-button"
