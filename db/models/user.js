@@ -6,6 +6,7 @@ module.exports = {
   // add your database adapter fns here
   getAllUsers,
   createUser,
+  getUserById,
 };
 
 async function getAllUsers() {
@@ -37,4 +38,19 @@ async function createUser( username, password, isAdmin ) {
 		throw error;
 	}
   
+}
+
+async function getUserById(userId) {
+	try {
+		const user = await client.query(`
+      SELECT id, username
+      FROM users
+      WHERE id=${userId}
+    `);
+		
+		const returnedUser = user.rows[0];
+		return returnedUser;
+	} catch (error) {
+		throw error;
+	}
 }
