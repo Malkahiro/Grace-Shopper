@@ -2,9 +2,7 @@ const {
   client,
   users,
   products,
-  
-
-} = require('./');
+  } = require('./');
 
 async function buildTables() {
   try {
@@ -14,6 +12,7 @@ async function buildTables() {
     console.log("Starting to drop all tables...")
     await client.query(`
       DROP TABLE IF EXISTS users;
+      DROP TABLE IF EXISTS products;
     `)
 
     console.log("Finished dropping all tables!")
@@ -26,7 +25,8 @@ async function buildTables() {
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL
+        password VARCHAR(255) NOT NULL,
+        "isAdmin" BOOLEAN DEFAULT false
       );
 
       CREATE TABLE products (
@@ -35,15 +35,19 @@ async function buildTables() {
         description TEXT NOT NULL,
         type VARCHAR(255) NOT NULL,
         format VARCHAR(255) NOT NULL,
-        creator VARCHAR(255) NOT NULL,        
+        creator VARCHAR(255) NOT NULL,
+        genre VARCHAR(255) NOT NULL,
+        "isPhysical" BOOLEAN DEFAULT true,
+        price INTEGER NOT NULL,
+        "imageURL" TEXT NOT NULL   
       )
     `)
+    console.log("Finished creating tables!")
   } catch (error) {
+    console.log("Error while creating Tables!")
     throw error;
   }
 }
-
-//  genre, digital or physical, price, image,
 
 async function populateInitialData() {
   try {
