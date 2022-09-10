@@ -27,7 +27,11 @@ async function buildTables() {
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        address VARCHAR(255) NOT NULL,
         "isAdmin" BOOLEAN DEFAULT false
+        
       );
 
       CREATE TABLE products (
@@ -55,11 +59,11 @@ async function populateInitialData() {
   try {
     console.log("Creating initial users...")
     
-    const user1 = await User.createUser("admin", "NabooIsGreat1", true)
-    const user2 = await User.createUser("chris", "Gigabyte1")
-    const user3 = await User.createUser("malka", "Rowlett1")
-    const user4 = await User.createUser("jake", "DoAKickflip")
-    const user5 = await User.createUser("shelby", "DanceDanceRevolution")
+    const user1 = await User.createUser("admin", "NabooIsGreat1", "Admin", "admin@gmail.com", "texas", true)
+    const user2 = await User.createUser("chris", "Gigabyte1", "chris", "chris@gmail.com", "dallas, tx")
+    const user3 = await User.createUser("malka", "Rowlett1", "malka", "malka@gmail.com", "Rowlett, TX")
+    const user4 = await User.createUser("jake", "DoAKickflip", "jake", "jake@gmail.com", "Tulsa, OK")
+    const user5 = await User.createUser("shelby", "DanceDanceRevolution", "shelby", "shelby@gmail.com", "Jacksonville, FL")
 
     console.log("Initial users created!")
     console.log("Creating initial products...")

@@ -15,22 +15,23 @@ async function getAllUsers() {
 
 // users id, username, password(hash), is_admin, email(hash), address(hash), name
 
-async function createUser( username, password, isAdmin ) {
+async function createUser( username, password, name, email, address, isAdmin) {
   const SALT_COUNT = 10;
-
 	const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+	const hashedEmail = await bcrypt.hash(email, SALT_COUNT)
+	const hashedAddress = await bcrypt.hash(address, SALT_COUNT)
 	try {
 		const {
 			rows: [user],
 		} = await client.query(
 			`
-    INSERT INTO users (username, password, "isAdmin")
-    VALUES ($1, $2, $3)
+    INSERT INTO users (username, password, name, email, address, "isAdmin")
+    VALUES ($1, $2, $3, $4, $5, $6)
     ON CONFLICT (username) DO NOTHING
     RETURNING *;
     
   `,
-			[username, hashedPassword, isAdmin]
+			[username, hashedPassword, name, hashedEmail, hashedAddress, isAdmin]
 		);
 		delete user.password;
 		return user;

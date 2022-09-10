@@ -4,13 +4,12 @@ const {
 User
 } = require("../db/index");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const { JWT_SECRET } = process.env;
 
 // code here
 
 usersRouter.post("/register", async (req, res, next) => {
-	const { username, password } = req.body;
+	const { username, password, name, email, address } = req.body;
 
 	try {
 		const _user = await User.getUserByUsername(username);
@@ -31,7 +30,7 @@ usersRouter.post("/register", async (req, res, next) => {
 			});
 		}
 
-		const user = await User.createUser({ username, password });
+		const user = await User.createUser({ username, password, name, email, address });
 
 		const token = jwt.sign(
 			{
@@ -50,6 +49,48 @@ usersRouter.post("/register", async (req, res, next) => {
 			token: token,
 			user: user,
 		});
+	} catch (error) {
+		next(error);
+	}
+});
+
+usersRouter.post("/login", async (req, res, next) => {
+	const { username, password } = req.body;
+	const SALT_COUNT = 10;
+
+	const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+	const isValid = await bcrypt.compare(password, hashedPassword);
+	if (!username || !password) {
+		next({
+			name: "MissingCredentialsError",
+			message: "Please supply both a username and password",
+		});
+	}
+
+	try {
+		const user = await User.getUserByUsername(username);
+
+		if (user && isValid) {
+			const token = jwt.sign(
+				{
+					username: username,
+					id: user.id,
+				},
+				process.env.JWT_SECRET
+			);
+			res.send({
+				token: token,
+				user: user,
+				message: "you're logged in!",
+			});
+
+			return token;
+		} else {
+			next({
+				name: "IncorrectCredentialsError",
+				message: "Username or password is incorrect",
+			});
+		}
 	} catch (error) {
 		next(error);
 	}
