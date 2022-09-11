@@ -5,6 +5,7 @@ User
 } = require("../db/index");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
+const bcrypt = require("bcrypt")
 
 // code here
 
@@ -12,15 +13,15 @@ usersRouter.post("/register", async (req, res, next) => {
 	const { username, password, name, email, address } = req.body;
 
 	try {
-		// const _user = await User.getUserByUsername(username);
+		const _user = await User.getUserByUsername(username);
 
-		// if (_user) {
-		// 	next({
-		// 		error: "error",
-		// 		name: "UserExistsError",
-		// 		message: `User ${username} is already taken.`,
-		// 	});
-		// }
+		if (_user) {
+			next({
+				error: "error",
+				name: "UserExistsError",
+				message: `User ${username} is already taken.`,
+			});
+		}
 console.log(req.body)
 		if (password.length < 8) {
 			next({

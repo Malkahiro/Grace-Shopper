@@ -56,13 +56,16 @@ async function createUser( username, password, name, email, address, isAdmin) {
 
 async function getUserByUsername(username) {
 	try {
+		console.log("get User By Username was hit")
 		const user = await client.query(`
       SELECT id, username
       FROM users
-      WHERE username=${username}
-    `);
+      WHERE username=$1
+    `, [username]
+	)
 		
 		const returnedUser = user.rows[0];
+		console.log("user", user)
 		return returnedUser;
 	} catch (error) {
 		throw error;

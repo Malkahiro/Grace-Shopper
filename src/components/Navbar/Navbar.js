@@ -32,9 +32,6 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             <div>
               <div>
                 <span>
-                  <Link to="/products">Home</Link>
-                </span>
-                <span>
                   <Link to="/login">Login</Link>
                 </span>
                 <span>

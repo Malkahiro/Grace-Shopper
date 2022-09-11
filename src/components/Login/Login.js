@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = (setIsLoggedIn) => {
+const Login = (props) => {
+    const { setIsLoggedIn } = props
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ const Login = (setIsLoggedIn) => {
     })
       .then((response) => response.json())
       .then((result) => {
-        localStorage.setItem("token", result.data.token);
+        localStorage.setItem("token", result.token);
         setIsLoggedIn(true);
+        console.log("token", result.token)
       })
       .catch(console.error);
 
