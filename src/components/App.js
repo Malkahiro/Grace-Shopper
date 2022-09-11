@@ -7,8 +7,17 @@ import { getAPIHealth } from '../axios-services';
 import '../style/App.css';
 import Login from './Login/Login'
 import Register from './Register/Register';
-
+import Navbar from './Navbar/Navbar';
+import Products from './Products/Products';
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const [APIHealth, setAPIHealth] = useState('');
 
   useEffect(() => {
@@ -28,15 +37,17 @@ const App = () => {
   return (
     
     <div className="app-container">
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       <Routes>
-       <Route
+      <Route
           path="/login"
-          element={<Login />}
+          element={<Login setIsLoggedIn={setIsLoggedIn} />}
         />
         <Route
           path="/register"
-          element={<Register />}
+          element={<Register setIsLoggedIn={setIsLoggedIn} />}
         />
+        <Route path="/products" element={<Products isLoggedIn={isLoggedIn} />} />
         </Routes>
     </div>
   );

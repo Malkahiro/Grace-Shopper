@@ -29,6 +29,7 @@ async function getAllUsers() {
 
 async function createUser( username, password, name, email, address, isAdmin) {
   const SALT_COUNT = 10;
+  console.log(password, email, name, address)
 	const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
 	const hashedEmail = await bcrypt.hash(email, SALT_COUNT)
 	const hashedAddress = await bcrypt.hash(address, SALT_COUNT)
@@ -55,13 +56,16 @@ async function createUser( username, password, name, email, address, isAdmin) {
 
 async function getUserByUsername(username) {
 	try {
+		console.log("get User By Username was hit")
 		const user = await client.query(`
       SELECT id, username
       FROM users
-      WHERE username=${username}
-    `);
+      WHERE username=$1
+    `, [username]
+	)
 		
 		const returnedUser = user.rows[0];
+		console.log("user", user)
 		return returnedUser;
 	} catch (error) {
 		throw error;
