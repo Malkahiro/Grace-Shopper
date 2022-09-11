@@ -6,14 +6,26 @@ module.exports = {
   // add your database adapter fns here
   getAllUsers,
   createUser,
-  getUserById,
+  getUserByUsername,
 };
 
 async function getAllUsers() {
-  /* this adapter should fetch a list of users from your db */
+	try {
+		const {rows} = await client.query(
+			`
+      SELECT *
+      FROM users
+    `,
+		);
+		const allUsers = rows.map((row)=>{
+			delete row.password
+		});
+		return allUsers;
+	} catch (error) {
+		throw error;
+	}
 }
 
-// users id, username, password(hash), is_admin, email(hash), address(hash), name
 
 async function createUser( username, password, name, email, address, isAdmin) {
   const SALT_COUNT = 10;
@@ -41,12 +53,12 @@ async function createUser( username, password, name, email, address, isAdmin) {
   
 }
 
-async function getUserById(userId) {
+async function getUserByUsername(username) {
 	try {
 		const user = await client.query(`
       SELECT id, username
       FROM users
-      WHERE id=${userId}
+      WHERE username=${username}
     `);
 		
 		const returnedUser = user.rows[0];
