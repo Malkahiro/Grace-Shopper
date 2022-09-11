@@ -5,7 +5,8 @@ const client = require('../client');
 module.exports = {
   // add your database adapter fns here
   createProduct,
-  getAllProducts
+  getAllProducts,
+  getProductById
 };
 
 async function createProduct(name, released, description, type, format, creator, genre, isPhysical, price, imageURL) {
@@ -41,4 +42,17 @@ async function getAllProducts() {
           throw error;
         }
 
+}
+
+async function getProductById(id) {
+  try{
+    const {product} = await client.query(`
+      SELECT *
+      FROM products
+      WHERE id=${id}
+    `)
+    return product
+  } catch (error) {
+    throw error
+  }
 }

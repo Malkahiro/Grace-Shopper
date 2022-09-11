@@ -15,4 +15,16 @@ productsRouter.get('/', async (req, res, next) => {
     }
   });
 
+productsRouter.get('/:productId', async (req, res, next) => {
+    const productId = req.body
+    try {
+        const response = await Product.getProductById(productId)
+
+        res.send(response)
+    } catch (error) {
+        next(error)
+    }
+})
+
 module.exports = productsRouter;
+
