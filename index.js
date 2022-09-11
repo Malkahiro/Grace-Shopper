@@ -28,6 +28,7 @@ server.use((req, res, next) => {
 
 // bring in the DB connection
 const { client } = require('./db');
+const { appendFile } = require('fs');
 
 // connect to the server
 const PORT = process.env.PORT || 4000;
@@ -43,6 +44,12 @@ const handle = server.listen(PORT, async () => {
     console.error('Database is closed for repairs!\n', error);
   }
 });
+
+server.use((error, req, res, next) =>{
+  res.send(
+    error
+  )
+})
 
 // export server and handle for routes/*.test.js
 module.exports = { server, handle };
