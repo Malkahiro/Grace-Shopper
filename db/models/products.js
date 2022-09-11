@@ -32,9 +32,9 @@ async function getAllProducts() {
         try {
           const { rows } = await client.query(`
             SELECT *
-            FROM routines
+            FROM products
             `);
-                    
+
           return rows;
         }
         catch (error) {
