@@ -29,6 +29,7 @@ async function getAllUsers() {
 
 async function createUser( username, password, name, email, address, isAdmin) {
   const SALT_COUNT = 10;
+  console.log(password, email, name, address)
 	const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
 	const hashedEmail = await bcrypt.hash(email, SALT_COUNT)
 	const hashedAddress = await bcrypt.hash(address, SALT_COUNT)

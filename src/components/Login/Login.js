@@ -1,43 +1,34 @@
-//READD THE CODE BELOW!!!
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import React from "react";
-// import { APIURL } from "../api/api";
+const Login = (setIsLoggedIn) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-// READD CODE BELOW!!!
-// const Login = ({ setIsLoggedIn }) =>
-const Login = () => {
-//   const [username, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
-//   const navigate = useNavigate();
+  const submit = async (event) => {
+    event.preventDefault();
+    await fetch(`/api/users/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+          username: username,
+          password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        localStorage.setItem("token", result.data.token);
+        setIsLoggedIn(true);
+      })
+      .catch(console.error);
 
-//   const submit = async (event) => {
-//     event.preventDefault();
-//     await fetch(`${APIURL}users/login`, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({
-//         user: {
-//           username: username,
-//           password: password,
-//         },
-//       }),
-//     })
-//       .then((response) => response.json())
-//       .then((result) => {
-//         localStorage.setItem("token", result.data.token);
-//         setIsLoggedIn(true);
-//       })
-//       .catch(console.error);
-
-//     navigate("/products");
-//   };
+    navigate("/products");
+  };
   return (
     <div className="main-login">
       <main className="form-signin w-100 m-auto">
-      {/* Add this back <form onSubmit={submit}> */}
-        <form>  
+      <form onSubmit={submit}>
           <h1 id="login-header" className="h3 mb-3 fw-normal">
             Login To Account
           </h1>
@@ -48,7 +39,7 @@ const Login = () => {
               className="form-control"
               id="floatingInput"
               placeholder="username"
-            //   onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) => setUsername(event.target.value)}
             />
           </div>
           <div className="form-floating">
@@ -58,7 +49,7 @@ const Login = () => {
               className="form-control"
               id="floatingPassword"
               placeholder="Password"
-            //   onChange={(event) => setPassword(event.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
             />
           </div>
           <button
