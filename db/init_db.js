@@ -12,6 +12,9 @@ async function buildTables() {
     // drop tables in correct order
     console.log("Starting to drop all tables...")
     await client.query(`
+      DROP TABLE IF EXISTS cart-products
+      DROP TABLE IF EXISTS shopping-cart
+      DROP TABLE IF EXISTS guest-cart
       DROP TABLE IF EXISTS users;
       DROP TABLE IF EXISTS products;
     `)
@@ -46,6 +49,25 @@ async function buildTables() {
         "isPhysical" BOOLEAN DEFAULT true,
         price INTEGER NOT NULL,
         "imageURL" TEXT NOT NULL   
+      )
+
+      CREATE TABLE shopping-cart (
+        id SERIAL PRIMARY KEY,
+        "userId" INTEGER NOT NULL,
+        "cartProductsId" INTEGER NOT NULL
+      )
+
+      CREATE TABLE guest-cart (
+        id SERIAL PRIMARY KEY,
+        "userIp" INET NOT NULL,
+        "cartProductsId" INTEGER NOT NULL
+      )
+
+      CREATE TABLE cart-products (
+        id SERIAL PRIMARY KEY,
+        "cartId" INTEGER NOT NULL,
+        "productId" INTEGER NOT NULL
+
       )
     `)
     console.log("Finished creating tables!")

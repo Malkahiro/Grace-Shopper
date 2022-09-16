@@ -49,8 +49,9 @@ async function getProductById(id) {
     const {product} = await client.query(`
       SELECT *
       FROM products
-      WHERE id=${id}
-    `)
+      WHERE id = $1
+    `[id])
+    
     return product
   } catch (error) {
     throw error
