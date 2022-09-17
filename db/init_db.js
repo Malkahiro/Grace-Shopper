@@ -72,7 +72,7 @@ async function populateInitialData() {
     const product2 = await Product.createProduct("This Land", 2019, "The CD for the album This Land", "music", "cd", "Gary Clark Jr.", "rock", true, 10, "https://m.media-amazon.com/images/I/61-EMLISJjL._SL1500_.jpg")
     const product3 = await Product.createProduct("The Essential Book of Vegan Bakes", 2010, "A vegan baking cookbook", "book", "soft cover", "Holly Jade", "non-fiction", true, 13, "https://images-na.ssl-images-amazon.com/images/I/61r0vB5doAL.jpg")
     const product4 = await Product.createProduct("Eyes of the Void", 1987, "A science fiction book", "book", "audiobook", "Adrian Tchaikovsky", "science-fiction", false, 5, "https://m.media-amazon.com/images/I/51O1u7FL5rL.jpg")
-    const product5 = await Product.createProduct("Mad Max: Fury Road", 2015, "The newest Mad Max Film", "movie", "digital download", "George Miller", "action", false, 5, "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTdW7z-a-2sI42LD5nqqaoIbHisnmWNaXec8pK_GQ6ymxrSAmqx.jpg")
+    const product5 = await Product.createProduct("Mad Max: Fury Road", 2015, "The newest Mad Max Film", "movie", "digital download", "George Miller", "action", false, 5, "https://m.media-amazon.com/images/M/MV5BN2EwM2I5OWMtMGQyMi00Zjg1LWJkNTctZTdjYTA4OGUwZjMyXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg")
 
     console.log("Finished creating initial products!")
 

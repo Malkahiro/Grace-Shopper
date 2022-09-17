@@ -10,7 +10,6 @@ const {requireUser, requireAdmin } = require('./utils')
 productsRouter.get('/', async (req, res, next) => {
     try {
       const response = await Product.getAllProducts();
-  
       res.send(response);
     } catch (error) {
       next(error);
