@@ -3,12 +3,13 @@ import { Routes, Route } from "react-router-dom";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { getAPIHealth } from '../axios-services';
+import { getAPIHealth, getProductId, getProducts } from '../axios-services';
 import '../style/App.css';
 import Login from './Login/Login'
 import Register from './Register/Register';
 import Navbar from './Navbar/Navbar';
 import Products from './Products/Products';
+import ProductDetails from './Products/ProductDetails';
 import Success from './Success/Success';
 import Footer from './Footer/Footer';
 import CreateProduct from './CreateProduct/CreateProduct';
@@ -26,6 +27,7 @@ const App = () => {
   }, []);
 
   const [APIHealth, setAPIHealth] = useState('');
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -35,11 +37,27 @@ const App = () => {
       const { healthy } = await getAPIHealth();
       setAPIHealth(healthy ? 'api is up! :D' : 'api is down :/');
     };
+    
 
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
+
+
+    try{
+      const getData = async () =>{
+        const data = await getProducts();
+        setProducts(data);
+    } 
+    getData();
+    } catch(error) {
+      console.error(error)
+    }
+
   }, []);
+
+  
+// console.log(products);
 
   return (
     
@@ -54,7 +72,9 @@ const App = () => {
           path="/register"
           element={<Register setIsLoggedIn={setIsLoggedIn} />}
         />
-        <Route path="/products" element={<Products isLoggedIn={isLoggedIn} />} />
+
+        <Route path="/products" element={<Products isLoggedIn={isLoggedIn}  products={products}/>} />
+        <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
         <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
         <Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} />} />
         <Route path="/users" element={<Users isLoggedIn={isLoggedIn} />} />

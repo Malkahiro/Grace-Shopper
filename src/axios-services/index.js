@@ -41,6 +41,27 @@ export async function getAPIHealth() {
   }
 }
 
+
+
+export const getProducts = async () =>{
+  try{
+      const response = await fetch('/api/products');
+      const result = await response.json();
+      return result;
+  } catch (error){
+      console.error(error)
+  }
+}
+
+export const getProductId = async ({Id}) =>{
+  try{
+    const response = await fetch(`/api/products/${Id}`);
+    const result = await response.json();
+    return result;
+  } catch (error){
+    console.error(error)
+  }
+}
 export const createProduct = async (addProduct) => {
   const token = localStorage.getItem("token");
   const response = await fetch(`/api/products/`, {
@@ -71,4 +92,5 @@ export const createProduct = async (addProduct) => {
 //     console.error(error);
 //   }
 // };
+
 
