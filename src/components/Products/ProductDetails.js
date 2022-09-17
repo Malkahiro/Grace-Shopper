@@ -1,26 +1,21 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {Link, useParams} from 'react-router-dom'
+import SingleProduct from "./SingleProduct";
 
 
 
 
 const ProductDetails = ({products}) => {
   let {id} = useParams();
-  const [details, setDetails] = useState([]);
-console.log(products);
+  id = Number(id);
+const detailedProduct = products.filter((product) => {
+  return product.id === id
+});
 
+console.log(detailedProduct);
 
-  useEffect(() =>{
-    const getDetails = products.map((item) =>{
-      if(item.id === id){
-        console.log(item);
-        return setDetails(item);
-      }
-    })
-  }, [id]);
     return ( <div>
-      <h1>Single Product</h1>
-      <h2>{id}</h2>
+     {detailedProduct?.length && <SingleProduct detailedProduct={detailedProduct[0]} />}
       <Link to={'/products'}>Back to products</Link>
     </div> );
 }
