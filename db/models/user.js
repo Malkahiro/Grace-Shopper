@@ -31,8 +31,7 @@ async function createUser( username, password, name, email, address, isAdmin) {
   const SALT_COUNT = 10;
   console.log(password, email, name, address)
 	const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-	const hashedEmail = await bcrypt.hash(email, SALT_COUNT)
-	const hashedAddress = await bcrypt.hash(address, SALT_COUNT)
+	
 	try {
 		const {
 			rows: [user],
@@ -44,7 +43,7 @@ async function createUser( username, password, name, email, address, isAdmin) {
     RETURNING *;
     
   `,
-			[username, hashedPassword, name, hashedEmail, hashedAddress, isAdmin]
+			[username, hashedPassword, name, email, address, isAdmin]
 		);
 		delete user.password;
 		return user;

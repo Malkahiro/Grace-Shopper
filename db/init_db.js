@@ -1,6 +1,7 @@
 const {
   User,
-  Product
+  Product,
+  Cart
   } = require('./');
   const client = require("./client")
 
@@ -97,6 +98,7 @@ async function populateInitialData() {
     const product5 = await Product.createProduct("Mad Max: Fury Road", 2015, "The newest Mad Max Film", "movie", "digital download", "George Miller", "action", false, 5, "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTdW7z-a-2sI42LD5nqqaoIbHisnmWNaXec8pK_GQ6ymxrSAmqx.jpg")
 
     console.log("Finished creating initial products!")
+    console.log("Creating shopping carts...")
 
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
