@@ -12,14 +12,17 @@ function requireUser(req, res, next) {
   }
 
   function requireAdmin(req, res, next) {
+     console.log("require", req.user)
     if (!req.user.isAdmin) {
         res.status(401)
-        next({
+        return next({
             error: 'Error!',
             name: 'AdminStatusRequired',
             message: 'You must be an Administrator to complete this action.'
         })
     }
+    next();
+    console.log("require")
   }
   
   module.exports = {

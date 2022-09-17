@@ -9,6 +9,18 @@ const bcrypt = require("bcrypt")
 
 // code here
 
+usersRouter.get('/', async (req, res, next) => {
+	try {
+    const users = await User.getAllUsers();
+	console.log("from API", users)
+  res.send(
+    users
+  );
+} catch (error) {
+	next(error);
+}
+});
+
 usersRouter.post("/register", async (req, res, next) => {
 	const { username, password, name, email, address } = req.body;
 
