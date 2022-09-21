@@ -109,4 +109,15 @@ usersRouter.post("/login", async (req, res, next) => {
 	}
 });
 
+usersRouter.get('/:username', async (req, res, next) => {
+    const username = req.body
+    try {
+        const response = await User.getUserByUsername(username)
+
+        res.send(response)
+    } catch (error) {
+        next(error)
+    }
+})
+
 module.exports = usersRouter;
