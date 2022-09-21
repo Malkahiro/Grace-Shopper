@@ -10,7 +10,6 @@ const {requireUser, requireAdmin } = require('./utils')
 productsRouter.get('/', async (req, res, next) => {
     try {
       const response = await Product.getAllProducts();
-  
       res.send(response);
     } catch (error) {
       next(error);
@@ -29,10 +28,11 @@ productsRouter.get('/:productId', async (req, res, next) => {
 })
 
 productsRouter.post('/', requireAdmin, async (req, res, next) => {
+    console.log("Hello")
     try {
-        const {name, released, description, type, format, creator, genre, isPhysical, price, imageURL} = req.body
+        const {name, released, description, type, format, creator, genre, isPhysical, price, imageURL} = req.body.product
         const response = await createProduct(name, released, description, type, format, creator, genre, isPhysical, price, imageURL)
-
+console.log("name", name)
         res.send(response)
         
     } catch (error){

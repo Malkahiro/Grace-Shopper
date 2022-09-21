@@ -1,0 +1,21 @@
+.product{
+    display: flex;
+    border: 2px solid black;
+    align-items: center;
+    margin: 15px;
+    padding: 15px;
+    background-color: lightblue;
+}
+
+img{
+    width: 500px;
+    height: 650px;
+}
+
+.products-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-image: url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8b3BlbiUyMGJvb2t8ZW58MHx8MHx8&w=1000&q=80');
+}

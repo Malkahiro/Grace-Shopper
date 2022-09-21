@@ -17,8 +17,10 @@ async function getAllUsers() {
       FROM users
     `,
 		);
+		console.log(rows)
 		const allUsers = rows.map((row)=>{
 			delete row.password
+			return row;
 		});
 		return allUsers;
 	} catch (error) {
@@ -30,7 +32,7 @@ async function getAllUsers() {
 async function createUser( username, password, name, email, address, isAdmin) {
   const SALT_COUNT = 10;
 	const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-	
+
 	try {
 		const {
 			rows: [user],
@@ -55,7 +57,7 @@ async function createUser( username, password, name, email, address, isAdmin) {
 async function getUserByUsername(username) {
 	try {
 		const user = await client.query(`
-      SELECT id, username
+      SELECT id, username, "isAdmin"
       FROM users
       WHERE username=$1
     `, [username]
