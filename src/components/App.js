@@ -10,6 +10,7 @@ import Register from './Register/Register';
 import Navbar from './Navbar/Navbar';
 import Products from './Products/Products';
 import ProductDetails from './Products/ProductDetails';
+import SearchBar from './Search/SearchBar';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -21,6 +22,8 @@ const App = () => {
 
   const [APIHealth, setAPIHealth] = useState('');
   const [products, setProducts] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [filterResults, setFilterResults] = useState([]);
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -41,6 +44,8 @@ const App = () => {
       const getData = async () =>{
         const data = await getProducts();
         setProducts(data);
+        setSearchResults(data);
+        setFilterResults(data);
     } 
     getData();
     } catch(error) {
@@ -49,13 +54,12 @@ const App = () => {
 
   }, []);
 
-  
-// console.log(products);
 
   return (
     
     <div className="app-container">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+      <SearchBar products={products} setSearchResults={setSearchResults} />
       <Routes>
       <Route
           path="/login"
@@ -65,7 +69,7 @@ const App = () => {
           path="/register"
           element={<Register setIsLoggedIn={setIsLoggedIn} />}
         />
-        <Route path="/products" element={<Products isLoggedIn={isLoggedIn}  products={products}/>} />
+        <Route path="/products" element={<Products isLoggedIn={isLoggedIn}  products={searchResults}/>} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
         </Routes>
     </div>
