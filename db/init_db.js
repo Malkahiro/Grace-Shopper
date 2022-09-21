@@ -13,9 +13,9 @@ async function buildTables() {
     // drop tables in correct order
     console.log("Starting to drop all tables...")
     await client.query(`
-      DROP TABLE IF EXISTS cart-products
-      DROP TABLE IF EXISTS shopping-cart
-      DROP TABLE IF EXISTS guest-cart
+      DROP TABLE IF EXISTS cart_products;
+      DROP TABLE IF EXISTS shopping_cart;
+      DROP TABLE IF EXISTS guest_cart;
       DROP TABLE IF EXISTS users;
       DROP TABLE IF EXISTS products;
     `)
@@ -50,26 +50,26 @@ async function buildTables() {
         "isPhysical" BOOLEAN DEFAULT true,
         price INTEGER NOT NULL,
         "imageURL" TEXT NOT NULL   
-      )
+      );
 
-      CREATE TABLE shopping-cart (
+      CREATE TABLE shopping_cart (
         id SERIAL PRIMARY KEY,
-        "userId" INTEGER NOT NULL,
-        "cartProductsId" INTEGER NOT NULL
-      )
+        "userId" INTEGER NOT NULL REFERENCES users (id),
+        "isPaid" BOOLEAN DEFAULT FALSE
+      );
 
-      CREATE TABLE guest-cart (
+      CREATE TABLE guest_cart (
         id SERIAL PRIMARY KEY,
         "userIp" INET NOT NULL,
-        "cartProductsId" INTEGER NOT NULL
-      )
+        "cartProductsId" INTEGER
+      );
 
-      CREATE TABLE cart-products (
+      CREATE TABLE cart_products (
         id SERIAL PRIMARY KEY,
-        "cartId" INTEGER NOT NULL,
-        "productId" INTEGER NOT NULL
+        "cartId" INTEGER NOT NULL REFERENCES shopping_cart (id),
+        "productId" INTEGER NOT NULL REFERENCES products (id)
 
-      )
+      );
     `)
     console.log("Finished creating tables!")
   } catch (error) {
@@ -99,6 +99,26 @@ async function populateInitialData() {
 
     console.log("Finished creating initial products!")
     console.log("Creating shopping carts...")
+
+    const cart1 = await Cart.createUserCart(3)
+    const cart2 = await Cart.createUserCart(4)
+
+    console.log("Finished creating carts!")
+    console.log("Adding products to carts...")
+
+    const cartProduct1 = await Cart.addProductToCart(1, 1)
+    const cartProduct2 = await Cart.addProductToCart(1, 2)
+    const cartProduct3 = await Cart.addProductToCart(1, 3)
+    const cartProduct4 = await Cart.addProductToCart(2, 4)
+    const cartProduct5 = await Cart.addProductToCart(2, 5)
+
+    console.log("Finished adding products to carts!")
+    console.log("Checking user carts...")
+
+    const checkCart1 = await Cart.getUserCart(3)
+    const checkCart2 = await Cart.getUserCart(4)
+
+    console.log("Finished checking users carts!")
 
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
