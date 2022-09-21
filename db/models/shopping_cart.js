@@ -89,8 +89,9 @@ async function deleteUserCart(userId, cartId) {
         `, [cartId]
         )
         await client.query(`
-        DELETE FROM shopping_cart
-        WHERE "cartId" = $1
+        UPDATE shopping_cart
+        SET "isPaid"=TRUE
+        WHERE "userId" = $1
         `, [userId]
         )
     } catch (error) {
