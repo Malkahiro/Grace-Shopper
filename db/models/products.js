@@ -49,7 +49,8 @@ async function getProductById(id) {
       SELECT *
       FROM products
       WHERE id = $1
-    `, [id])
+    `[id])
+
     return product
   } catch (error) {
     throw error
