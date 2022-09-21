@@ -11,8 +11,15 @@ import Navbar from './Navbar/Navbar';
 import Products from './Products/Products';
 import ProductDetails from './Products/ProductDetails';
 import SearchBar from './Search/SearchBar';
+import Success from './Success/Success';
+import Footer from './Footer/Footer';
+import CreateProduct from './CreateProduct/CreateProduct';
+import Admin from './Admin/Admin';
+import Users from './Users/Users';
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -71,7 +78,12 @@ const App = () => {
         />
         <Route path="/products" element={<Products isLoggedIn={isLoggedIn}  products={searchResults}/>} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
+        <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
+        <Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} />} />
+        <Route path="/users" element={<Users isLoggedIn={isLoggedIn} />} />
+        <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} />} />
         </Routes>
+        <Footer isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
     </div>
   );
 };

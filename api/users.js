@@ -9,6 +9,18 @@ const bcrypt = require("bcrypt")
 
 // code here
 
+usersRouter.get('/', async (req, res, next) => {
+	try {
+    const users = await User.getAllUsers();
+	console.log("from API", users)
+  res.send(
+    users
+  );
+} catch (error) {
+	next(error);
+}
+});
+
 usersRouter.post("/register", async (req, res, next) => {
 	const { username, password, name, email, address } = req.body;
 
@@ -96,5 +108,16 @@ usersRouter.post("/login", async (req, res, next) => {
 		next(error);
 	}
 });
+
+usersRouter.get('/:username', async (req, res, next) => {
+    const username = req.body
+    try {
+        const response = await User.getUserByUsername(username)
+
+        res.send(response)
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = usersRouter;

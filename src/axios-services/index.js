@@ -17,6 +17,19 @@ import axios from 'axios';
     }
   }
 */
+export const getUsers = async () => {
+  try {
+    const response = await fetch("/api/users", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export async function getAPIHealth() {
   try {
@@ -27,6 +40,7 @@ export async function getAPIHealth() {
     return { healthy: false };
   }
 }
+
 
 
 export const getProducts = async () =>{
@@ -48,3 +62,35 @@ export const getProductId = async ({Id}) =>{
     console.error(error)
   }
 }
+export const createProduct = async (addProduct) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`/api/products/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      product: addProduct,
+    }),
+  });
+  const result = await response.json();
+};
+
+// export const getUser = async () => {
+//   try {
+//     const token = localStorage.getItem("token");
+//     const response = await fetch(`users/me`, {
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     const result = await response.json();
+//     return result;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+

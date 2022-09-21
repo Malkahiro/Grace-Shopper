@@ -21,7 +21,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                     setIsLoggedIn(false);
                   }}
                 >
-                  LOGOUT
+                  Logout
                 </Link>
               </span>
               <span>
