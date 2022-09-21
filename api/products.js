@@ -28,7 +28,6 @@ productsRouter.get('/:productId', async (req, res, next) => {
 })
 
 productsRouter.post('/', requireAdmin, async (req, res, next) => {
-    console.log("Hello")
     try {
         const {name, released, description, type, format, creator, genre, isPhysical, price, imageURL} = req.body.product
         const response = await createProduct(name, released, description, type, format, creator, genre, isPhysical, price, imageURL)
