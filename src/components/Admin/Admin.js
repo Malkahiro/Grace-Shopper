@@ -5,10 +5,13 @@ import './Admin.css'
 
 const Admin = ({products, setProducts}) => {
 useEffect(() => {
-    getProducts()
-    .then((newProducts) => {
-        setProducts(newProducts)
+    const getResult = async () => {
+        await getProducts()
+        .then((newProducts) => {
+            setProducts(newProducts)
     })
+    }
+    getResult();
 }, []);
 
 return (<div className="products-list">

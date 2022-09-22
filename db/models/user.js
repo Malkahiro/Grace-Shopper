@@ -17,7 +17,6 @@ async function getAllUsers() {
       FROM users
     `,
 		);
-		console.log(rows)
 		const allUsers = rows.map((row)=>{
 			delete row.password
 			return row;
@@ -64,7 +63,6 @@ async function getUserByUsername(username) {
 	)
 		
 		const returnedUser = user.rows[0];
-		console.log("user", user)
 		return returnedUser;
 	} catch (error) {
 		throw error;

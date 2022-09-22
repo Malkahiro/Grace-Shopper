@@ -12,7 +12,6 @@ const bcrypt = require("bcrypt")
 usersRouter.get('/', async (req, res, next) => {
 	try {
     const users = await User.getAllUsers();
-	console.log("from API", users)
   res.send(
     users
   );
@@ -34,7 +33,7 @@ usersRouter.post("/register", async (req, res, next) => {
 				message: `User ${username} is already taken.`,
 			});
 		}
-console.log(req.body)
+		
 		if (password.length < 8) {
 			next({
 				error: "error",

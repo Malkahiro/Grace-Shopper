@@ -93,4 +93,19 @@ export const createProduct = async (addProduct) => {
 //   }
 // };
 
-
+export const deleteProduct = async (Id) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`/api/products/products/${Id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.data
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};

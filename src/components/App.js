@@ -15,6 +15,8 @@ import Footer from './Footer/Footer';
 import CreateProduct from './CreateProduct/CreateProduct';
 import Admin from './Admin/Admin';
 import Users from './Users/Users';
+import EditDetails from './EditProduct/EditDetails';
+
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -77,12 +79,14 @@ const App = () => {
           element={<Register setIsLoggedIn={setIsLoggedIn} />}
         />
 
-        <Route path="/products" element={<Products isLoggedIn={isLoggedIn}  products={products}/>} />
+        <Route path="/products" element={<Products isLoggedIn={isLoggedIn}  setProducts={setProducts} products={products}/>} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
         <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
-        <Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} />} />
+        <Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products}/>} />
         <Route path="/users" element={<Users isLoggedIn={isLoggedIn} />} />
         <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} />} />
+        <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts} />}></Route>
+        
         </Routes>
         <Footer isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
     </div>

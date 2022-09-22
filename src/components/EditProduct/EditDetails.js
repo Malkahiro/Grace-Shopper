@@ -2,7 +2,7 @@ import React from "react";
 import {Link, useParams} from 'react-router-dom'
 import EditProduct from "./EditProduct";
 
-const EditDetails = ({products}) => {
+const EditDetails = ({products, setProducts }) => {
   let {id} = useParams();
   id = Number(id);
 const detailedProduct = products.filter((product) => {
@@ -10,7 +10,7 @@ const detailedProduct = products.filter((product) => {
 });
 
     return ( <div>
-     {detailedProduct?.length && <EditProduct detailedProduct={detailedProduct[0]} />}
+     {detailedProduct?.length && <EditProduct detailedProduct={detailedProduct[0]} setProducts={setProducts} />}
       <Link to={'/admin'}>Back to products</Link>
     </div> );
 }

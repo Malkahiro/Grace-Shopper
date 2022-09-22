@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Link} from 'react-router-dom'
+import { getProducts } from "../../axios-services";
 import './Products.css'
 
-const Products = ({products}) => {
+const Products = ({products, setProducts}) => {
 // console.log(products);
+useEffect(() => {
+    getProducts()
+    .then((newProducts) => {
+        setProducts(newProducts)
+    })
+}, []);
 return (<div className="products-list">
 <p>Products</p>
 {products.map((product) =>{
