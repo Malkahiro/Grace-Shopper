@@ -15,7 +15,6 @@ async function buildTables() {
     await client.query(`
       DROP TABLE IF EXISTS cart_products;
       DROP TABLE IF EXISTS shopping_cart;
-      DROP TABLE IF EXISTS guest_cart;
       DROP TABLE IF EXISTS users;
       DROP TABLE IF EXISTS products;
     `)
@@ -56,12 +55,6 @@ async function buildTables() {
         id SERIAL PRIMARY KEY,
         "userId" INTEGER NOT NULL REFERENCES users (id),
         "isPaid" BOOLEAN DEFAULT FALSE
-      );
-
-      CREATE TABLE guest_cart (
-        id SERIAL PRIMARY KEY,
-        "userIp" INET NOT NULL,
-        "cartProductsId" INTEGER
       );
 
       CREATE TABLE cart_products (
