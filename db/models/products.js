@@ -6,7 +6,8 @@ module.exports = {
   // add your database adapter fns here
   createProduct,
   getAllProducts,
-  getProductById
+  getProductById,
+  deleteProduct
 };
 
 async function createProduct(name, released, description, type, format, creator, genre, isPhysical, price, imageURL) {
@@ -54,5 +55,20 @@ async function getProductById(id) {
     return product
   } catch (error) {
     throw error
+  }
+};
+
+async function deleteProduct(id) {
+  try {
+    const { rows: [product] } = await client.query(
+      `DELETE 
+      FROM products 
+      WHERE id=$1
+      RETURNING *`,
+       [id]
+    )
+    return product
+  } catch (error) {
+    console.error(error);
   }
 }
