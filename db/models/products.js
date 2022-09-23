@@ -29,7 +29,27 @@ async function createProduct(name, released, description, type, format, creator,
 	}
 }
 
-// edit products function
+async function editProduct(id, name, released, description, type, format, creator, genre, isPhysical, price, imageURL){
+  try {
+		const {
+			rows: [product],
+		} = await client.query(
+			`
+    UPDATE products
+    SET name=($2) AND released=($3) AND description=($4) AND 
+    WHERE
+    RETURNING *;
+    
+  `,
+			[name, released, description, type, format, creator, genre, isPhysical, price, imageURL]
+		);
+		return product;
+	} catch (error) {
+		throw error;
+	}
+
+}
+
 
 async function getAllProducts() {
 
