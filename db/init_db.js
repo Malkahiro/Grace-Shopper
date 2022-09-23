@@ -67,7 +67,8 @@ async function buildTables() {
       CREATE TABLE cart_products (
         id SERIAL PRIMARY KEY,
         "cartId" INTEGER NOT NULL REFERENCES shopping_cart (id),
-        "productId" INTEGER NOT NULL REFERENCES products (id)
+        "productId" INTEGER NOT NULL REFERENCES products (id),
+        quantity INTEGER DEFAULT 1
 
       );
     `)

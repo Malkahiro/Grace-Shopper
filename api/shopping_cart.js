@@ -16,11 +16,19 @@ cartsRouter.get('/:cartId', async (req, res, next) => {
     }
 })
 
-cartsRouter.post('/,', requireUser, async (req, res, next) => {
+cartsRouter.post('/,', async (req, res, next) => {
     try {
-        /// if there is no user cart or user cart isPaid, create a user cart, otherwise just add product to cart.
+        const {userId, productId} = req.body
+        const cart = await Cart.getUserCart(userId)
 
-        const {cartId, productId} = req.body
+        if (!cart || cart.isPaid) {
+            newCart = await Cart.createUserCart(userId)
+            cartId = newCart.id
+        } else {
+            cartId = cart.id
+        }
+
+
         const response = await Cart.addProductToCart(cartId, productId)
         res.send(response)
         
@@ -49,5 +57,15 @@ cartsRouter.delete('/:cartId', requireUser, async (req, res, next) => {
     }
 })
 
+
+cartsRouter.patch('/:cartId', async (req, res, next) => {
+    try {
+        const {cartId, productId, quantity} = req.body
+        const response = await Cart.updateProductQuantity(cartId, productId,quantity)
+        res.send(response)
+    } catch (error){
+        next (error)
+    }
+})
 
 module.exports = cartsRouter;

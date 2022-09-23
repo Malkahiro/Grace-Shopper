@@ -4,14 +4,12 @@ const { UNSAFE_NavigationContext } = require('react-router-dom');
 const client = require('../client');
 
 module.exports = {
-  // add your database adapter fns here
   createUserCart,
-  createGuestCart,
   addProductToCart,
-deleteGuestCart,
 deleteProductFromCart,
 deleteUserCart,
-getUserCart
+getUserCart,
+updateProductQuantity
 };
 
 async function createUserCart(userId) {
@@ -33,24 +31,6 @@ async function createUserCart(userId) {
 	}
 }
 
-async function createGuestCart(userIp, cartProductsId) {
-	try {
-		const {
-			rows: [guestCart],
-		} = await client.query(
-			`
-    INSERT INTO shopping_cart ("userIp", "cartProductsId")
-    VALUES ($1, $2)
-    RETURNING *;
-    
-  `,
-			[userIp, cartProductsId]
-		);
-		return guestCart;
-	} catch (error) {
-		throw error;
-	}
-}
 
 async function addProductToCart(cartId, productId) {
     try {
@@ -99,22 +79,7 @@ async function deleteUserCart(userId, cartId) {
     }
 }
 
-async function deleteGuestCart(guestIp, cartId) {
-    try{
-        await client.query(`
-        DELETE FROM cart_products
-        WHERE "cartId" = $1
-        `, [cartId]
-        )
-        await client.query(`
-        DELETE FROM shopping_cart
-        WHERE "cartId" = $1
-        `, [guestIp]
-        )
-    } catch (error) {
-        throw (error)
-    }
-}
+
 
 async function attatchProductsToCart(cart) {
     try {
@@ -155,3 +120,16 @@ async function getUserCart(id) {
         throw(error)
     }
 }
+
+async function updateProductQuantity(cartId, productId, quantity){
+    try{
+        await client.query(`
+        UPDATE cart_products
+        SET quantity=($3)
+        WHERE "cartID" = ($1) AND "productId" = ($2)
+        `, [cartId, productId, quantity])
+    } catch (error) {
+        throw(error)
+    }
+}
+//update product quantity function

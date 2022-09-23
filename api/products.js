@@ -39,5 +39,7 @@ console.log("name", name)
     }
 })
 
+//edit product
+
 module.exports = productsRouter;
 
