@@ -46,5 +46,7 @@ productsRouter.delete('/products/:productId', async (req, res, next) => {
     }
   });
 
+//edit product
+
 module.exports = productsRouter;
 

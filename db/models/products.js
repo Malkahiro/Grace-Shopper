@@ -29,6 +29,8 @@ async function createProduct(name, released, description, type, format, creator,
 	}
 }
 
+// edit products function
+
 async function getAllProducts() {
 
         try {
