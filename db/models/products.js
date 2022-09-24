@@ -7,7 +7,8 @@ module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
-  deleteProduct
+  deleteProduct,
+  editProduct
 };
 
 async function createProduct(name, released, description, type, format, creator, genre, isPhysical, price, imageURL) {
@@ -28,6 +29,37 @@ async function createProduct(name, released, description, type, format, creator,
 		throw error;
 	}
 }
+
+async function editProduct(id, name, released, description, type, format, creator, genre, isPhysical, price, imageURL){
+  try {
+		const {
+			rows: [product],
+		} = await client.query(
+			`
+    UPDATE products
+    SET name=($2),
+    released=($3),
+    description=($4),
+    type=($5),
+    format=($6),
+    creator=($7),
+    genre=($8),
+    "isPhysical"=($9),
+    price=($10),
+    "imageURL"=($11)
+    WHERE id = ($1)
+    RETURNING *;
+    
+  `,
+			[name, released, description, type, format, creator, genre, isPhysical, price, imageURL]
+		);
+		return product;
+	} catch (error) {
+		throw error;
+	}
+
+}
+
 
 async function getAllProducts() {
 

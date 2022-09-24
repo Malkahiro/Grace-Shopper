@@ -46,5 +46,15 @@ productsRouter.delete('/products/:productId', async (req, res, next) => {
     }
   });
 
+productsRouter.patch(':productId', requireAdmin, async (req, res, next) => {
+    try {
+    const {id, name, released, description, type, format, creator, genre, isPhysical, price, imageURL} = req.body.product
+    const updatedProduct = await Product.editProduct(id, name, released, description, type, format, creator, genre, isPhysical, price, imageURL)
+    res.send(updatedProduct)
+    }catch (error) {
+        next(error)
+    }
+})
+
 module.exports = productsRouter;
 

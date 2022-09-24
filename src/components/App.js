@@ -16,6 +16,9 @@ import Footer from './Footer/Footer';
 import CreateProduct from './CreateProduct/CreateProduct';
 import Admin from './Admin/Admin';
 import Users from './Users/Users';
+import DropDown from './DropDown/DropDown';
+import Books from './FilteredPages/Books';
+import Movies from './FilteredPages/Movies';
 import EditDetails from './EditProduct/EditDetails';
 import GuestCart from './GuestCart/GuestCart';
 import UserCart from './UserCart/UserCart';
@@ -29,7 +32,6 @@ const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
   const [products, setProducts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [filterResults, setFilterResults] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -50,7 +52,6 @@ const App = () => {
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
 
-
     try {
       const getData = async () =>{
           const data = await getProducts();  
@@ -61,6 +62,8 @@ const App = () => {
   } catch (error) {
     console.error(error)
   }
+
+    
   }, []);
   useEffect(() => {
     try{
@@ -87,6 +90,7 @@ const App = () => {
     <div className="app-container">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
       <SearchBar products={products} setSearchResults={setSearchResults} />
+      <DropDown />
       <Routes>
       <Route
           path="/login"
@@ -98,6 +102,8 @@ const App = () => {
         />
 
         <Route path="/products" element={<Products isLoggedIn={isLoggedIn} products={searchResults} setProducts={setProducts}/>} />
+        <Route path='/products/books' element={<Books isLoggedIn={isLoggedIn} products={searchResults} />} />
+        <Route path='/products/movies' element={<Movies isLoggedIn={isLoggedIn} products={searchResults} />} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
         <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
         {isAdmin && <><Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products} isAdmin={isAdmin} />} />
