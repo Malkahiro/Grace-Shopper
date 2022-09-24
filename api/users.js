@@ -12,7 +12,6 @@ const bcrypt = require("bcrypt")
 usersRouter.get('/', async (req, res, next) => {
 	try {
     const users = await User.getAllUsers();
-	console.log("from API", users)
   res.send(
     users
   );
@@ -34,7 +33,7 @@ usersRouter.post("/register", async (req, res, next) => {
 				message: `User ${username} is already taken.`,
 			});
 		}
-console.log(req.body)
+		
 		if (password.length < 8) {
 			next({
 				error: "error",
@@ -71,17 +70,19 @@ usersRouter.post("/login", async (req, res, next) => {
 	const { username, password } = req.body;
 	const SALT_COUNT = 10;
 
-	const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-	const isValid = await bcrypt.compare(password, hashedPassword);
+	const user = await User.getUserByUsername(username);
+	const userPassword = user.password
+
+	const isValid = await bcrypt.compare(password, userPassword);
 	if (!username || !password) {
-		next({
+		next(
+			{error: {
 			name: "MissingCredentialsError",
 			message: "Please supply both a username and password",
-		});
+		}});
 	}
 
 	try {
-		const user = await User.getUserByUsername(username);
 
 		if (user && isValid) {
 			const token = jwt.sign(
@@ -99,10 +100,11 @@ usersRouter.post("/login", async (req, res, next) => {
 
 			return token;
 		} else {
-			next({
+			next(
+				{error:{
 				name: "IncorrectCredentialsError",
 				message: "Username or password is incorrect",
-			});
+			}});
 		}
 	} catch (error) {
 		next(error);
@@ -110,13 +112,17 @@ usersRouter.post("/login", async (req, res, next) => {
 });
 
 usersRouter.get('/:username', async (req, res, next) => {
-    const username = req.body
+const usertoken = req.headers.authorization;
+const token = usertoken.split(' ');
+const decoded = jwt.verify(token[1], JWT_SECRET);
+const username = decoded.username
     try {
         const response = await User.getUserByUsername(username)
-
+		delete response.password
         res.send(response)
     } catch (error) {
-        next(error)
+        
+		console.error(error)
     }
 })
 

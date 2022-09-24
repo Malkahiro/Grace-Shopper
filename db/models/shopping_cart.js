@@ -4,14 +4,12 @@ const { UNSAFE_NavigationContext } = require('react-router-dom');
 const client = require('../client');
 
 module.exports = {
-  // add your database adapter fns here
   createUserCart,
-  createGuestCart,
   addProductToCart,
-deleteGuestCart,
 deleteProductFromCart,
 deleteUserCart,
-getUserCart
+getUserCart,
+updateProductQuantity
 };
 
 async function createUserCart(userId) {
@@ -33,24 +31,6 @@ async function createUserCart(userId) {
 	}
 }
 
-async function createGuestCart(userIp, cartProductsId) {
-	try {
-		const {
-			rows: [guestCart],
-		} = await client.query(
-			`
-    INSERT INTO shopping_cart ("userIp", "cartProductsId")
-    VALUES ($1, $2)
-    RETURNING *;
-    
-  `,
-			[userIp, cartProductsId]
-		);
-		return guestCart;
-	} catch (error) {
-		throw error;
-	}
-}
 
 async function addProductToCart(cartId, productId) {
     try {
@@ -89,8 +69,9 @@ async function deleteUserCart(userId, cartId) {
         `, [cartId]
         )
         await client.query(`
-        DELETE FROM shopping_cart
-        WHERE "cartId" = $1
+        UPDATE shopping_cart
+        SET "isPaid"=TRUE
+        WHERE "userId" = $1
         `, [userId]
         )
     } catch (error) {
@@ -98,22 +79,7 @@ async function deleteUserCart(userId, cartId) {
     }
 }
 
-async function deleteGuestCart(guestIp, cartId) {
-    try{
-        await client.query(`
-        DELETE FROM cart_products
-        WHERE "cartId" = $1
-        `, [cartId]
-        )
-        await client.query(`
-        DELETE FROM shopping_cart
-        WHERE "cartId" = $1
-        `, [guestIp]
-        )
-    } catch (error) {
-        throw (error)
-    }
-}
+
 
 async function attatchProductsToCart(cart) {
     try {
@@ -140,17 +106,30 @@ async function attatchProductsToCart(cart) {
 async function getUserCart(id) {
     try {
        const userWithCart = await client.query(`
-        SELECT shopping_cart.*, users.id AS "userId", users.username, users.password, users.address
+        SELECT shopping_cart.*, users.id AS "userId", users.username, users.address
         FROM shopping_cart
         JOIN users ON shopping_cart."userId" = users.id
         WHERE shopping_cart."userId" = $1 AND "isPaid" = FALSE
         `, [id])
 
-        console.log("user with cart: ", userWithCart.rows)
+
         const cartWithProducts = await attatchProductsToCart(userWithCart.rows[0])
-        console.log("carts with products: ", cartWithProducts)
         return cartWithProducts
     } catch (error){
+        console.error(error)
         throw(error)
     }
 }
+
+async function updateProductQuantity(cartId, productId, quantity){
+    try{
+        await client.query(`
+        UPDATE cart_products
+        SET quantity=($3)
+        WHERE "cartID" = ($1) AND "productId" = ($2)
+        `, [cartId, productId, quantity])
+    } catch (error) {
+        throw(error)
+    }
+}
+//update product quantity function

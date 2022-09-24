@@ -47,7 +47,7 @@ const handle = server.listen(PORT, async () => {
 });
 
 server.use((error, req, res, next) =>{
-  res.send(
+  res.status(500).send(
     error
   )
 })
