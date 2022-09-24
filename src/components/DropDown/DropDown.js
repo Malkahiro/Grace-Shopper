@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 const DropDown = () => {
-    return ( <select >
-        
-        <option value="">{<Link to={'/products/books'}>Books</Link>}</option>
-        <option value="">Movie</option>
-    </select> );
+    return ( <ul>
+        <li><Link to={'/products'}>All</Link></li>
+        <li><Link to={'/products/books'}>Books</Link></li>
+        <li><Link to={'/products/movies'}>Movies</Link></li>
+    </ul> );
 }
  
 export default DropDown;

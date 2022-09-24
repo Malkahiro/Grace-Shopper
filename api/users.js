@@ -118,6 +118,7 @@ const decoded = jwt.verify(token[1], JWT_SECRET);
 const username = decoded.username
     try {
         const response = await User.getUserByUsername(username)
+		delete response.password
         res.send(response)
     } catch (error) {
         

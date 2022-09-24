@@ -70,10 +70,16 @@ const App = () => {
     if (localStorage.getItem("token")) {
       setUsername(localStorage.getItem("username"))
       const userData = async () => {
-        const user = await getUser(username);
-        if (user.isAdmin === true) {
-          setIsAdmin(true)
-        } 
+        try{
+          const user = await getUser(username);
+          console.log(user)
+          if (user.isAdmin === true) {
+            setIsAdmin(true)
+          } 
+        } catch(error){
+          console.error(error)
+        }
+
       }
       userData()
     }
