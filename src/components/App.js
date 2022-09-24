@@ -16,6 +16,10 @@ import Footer from './Footer/Footer';
 import CreateProduct from './CreateProduct/CreateProduct';
 import Admin from './Admin/Admin';
 import Users from './Users/Users';
+import DropDown from './DropDown/DropDown';
+import Books from './FilteredPages/Books';
+import Movies from './FilteredPages/Movies';
+import Music from './FilteredPages/Music';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -67,6 +71,7 @@ const App = () => {
     <div className="app-container">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       <SearchBar products={products} setSearchResults={setSearchResults} />
+      <DropDown />
       <Routes>
       <Route
           path="/login"
@@ -77,6 +82,9 @@ const App = () => {
           element={<Register setIsLoggedIn={setIsLoggedIn} />}
         />
         <Route path="/products" element={<Products isLoggedIn={isLoggedIn}  products={searchResults}/>} />
+        <Route path='/products/books' element={<Books isLoggedIn={isLoggedIn} products={searchResults} />} />
+        <Route path='/products/movies' element={<Movies isLoggedIn={isLoggedIn} products={searchResults} />} />
+        <Route path='/products/music' element={<Music isLoggedIn={isLoggedIn} products={searchResults} />} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
         <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
         <Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} />} />
