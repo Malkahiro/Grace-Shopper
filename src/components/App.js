@@ -16,6 +16,9 @@ import Footer from './Footer/Footer';
 import CreateProduct from './CreateProduct/CreateProduct';
 import Admin from './Admin/Admin';
 import Users from './Users/Users';
+import DropDown from './DropDown/DropDown';
+import Books from './FilteredPages/Books';
+import Movies from './FilteredPages/Movies';
 import EditDetails from './EditProduct/EditDetails';
 
 
@@ -32,7 +35,6 @@ const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
   const [products, setProducts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [filterResults, setFilterResults] = useState([]);
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -47,23 +49,17 @@ const App = () => {
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
-
-
     
+    try{
       const getData = async () =>{
-        try {
-          const data = await getProducts();  
-          setProducts(data);
-          setSearchResults(data);
-        } catch (error) {
-          console.error(error)
-        }
-      }
-    getData().then(() => {
-      console.log(products)
-    })
-     
-
+        const data = await getProducts();
+        setProducts(data);
+        setSearchResults(data);
+    } 
+    getData();
+    } catch(error) {
+      console.error(error)
+    }
 
   }, []);
 
@@ -73,6 +69,7 @@ const App = () => {
     <div className="app-container">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       <SearchBar products={products} setSearchResults={setSearchResults} />
+      <DropDown />
       <Routes>
       <Route
           path="/login"
@@ -82,7 +79,8 @@ const App = () => {
           path="/register"
           element={<Register setIsLoggedIn={setIsLoggedIn} />}
         />
-
+        <Route path='/products/books' element={<Books isLoggedIn={isLoggedIn} products={searchResults} />} />
+        <Route path='/products/movies' element={<Movies isLoggedIn={isLoggedIn} products={searchResults} />} />
         <Route path="/products" element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
         <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
