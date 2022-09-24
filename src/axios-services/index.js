@@ -77,21 +77,21 @@ export const createProduct = async (addProduct) => {
   const result = await response.json();
 };
 
-// export const getUser = async () => {
-//   try {
-//     const token = localStorage.getItem("token");
-//     const response = await fetch(`users/me`, {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     const result = await response.json();
-//     return result;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+export const getUser = async (username) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`api/users/${username}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const user = await response.json();
+    return user
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const deleteProduct = async (Id) => {
   try {
@@ -109,3 +109,30 @@ export const deleteProduct = async (Id) => {
     console.error(error);
   }
 };
+export async function editProduct(
+  productId,
+  token,
+  { name, released, description, type, format, creator, genre, isPhysical, price, imageURL }
+) {
+  const response = await fetch(`api/products/${productId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      name: name,
+      released: released,
+      description: description,
+      type: type,
+      format: format,
+      creator: creator,
+      genre: genre,
+      isPhysical: isPhysical,
+      price: price,
+      imageURL: imageURL,
+    }),
+  });
+  const result = await response.json();
+  return result;
+}
