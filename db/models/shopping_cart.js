@@ -106,17 +106,17 @@ async function attatchProductsToCart(cart) {
 async function getUserCart(id) {
     try {
        const userWithCart = await client.query(`
-        SELECT shopping_cart.*, users.id AS "userId", users.username, users.password, users.address
+        SELECT shopping_cart.*, users.id AS "userId", users.username, users.address
         FROM shopping_cart
         JOIN users ON shopping_cart."userId" = users.id
         WHERE shopping_cart."userId" = $1 AND "isPaid" = FALSE
         `, [id])
 
-        console.log("user with cart: ", userWithCart.rows)
+
         const cartWithProducts = await attatchProductsToCart(userWithCart.rows[0])
-        console.log("carts with products: ", cartWithProducts)
         return cartWithProducts
     } catch (error){
+        console.error(error)
         throw(error)
     }
 }

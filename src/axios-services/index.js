@@ -137,3 +137,14 @@ export async function editProduct(
   const result = await response.json();
   return result;
 }
+
+export const getUserCart = async (id) =>{
+  try{
+      const response = await fetch(`/api/shopping_cart/${id}`);
+      const result = await response.json();
+      console.log({result, line:145})
+      return result;
+  } catch (error){
+      console.error(error)
+  }
+}
