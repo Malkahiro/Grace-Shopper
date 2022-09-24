@@ -90,7 +90,7 @@ const App = () => {
         <Route path="/users" element={<Users isLoggedIn={isLoggedIn} />} />
         <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} />} />
         <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts} />}></Route>
-        
+        <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>}></Route>
         </Routes>
         <Footer isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
     </div>
