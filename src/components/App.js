@@ -110,6 +110,8 @@ const App = () => {
         <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts}  isAdmin={isAdmin}/>}></Route> </>}
         <Route path="/guestcart" element={<GuestCart setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} />} />
+        <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>}></Route>
+
         </Routes>
 
         {isAdmin && isLoggedIn && <Footer isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>}

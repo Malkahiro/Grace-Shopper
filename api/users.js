@@ -70,17 +70,19 @@ usersRouter.post("/login", async (req, res, next) => {
 	const { username, password } = req.body;
 	const SALT_COUNT = 10;
 
-	const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-	const isValid = await bcrypt.compare(password, hashedPassword);
+	const user = await User.getUserByUsername(username);
+	const userPassword = user.password
+
+	const isValid = await bcrypt.compare(password, userPassword);
 	if (!username || !password) {
-		next({
+		next(
+			{error: {
 			name: "MissingCredentialsError",
 			message: "Please supply both a username and password",
-		});
+		}});
 	}
 
 	try {
-		const user = await User.getUserByUsername(username);
 
 		if (user && isValid) {
 			const token = jwt.sign(
@@ -98,10 +100,11 @@ usersRouter.post("/login", async (req, res, next) => {
 
 			return token;
 		} else {
-			next({
+			next(
+				{error:{
 				name: "IncorrectCredentialsError",
 				message: "Username or password is incorrect",
-			});
+			}});
 		}
 	} catch (error) {
 		next(error);

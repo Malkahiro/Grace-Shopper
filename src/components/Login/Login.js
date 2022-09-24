@@ -18,8 +18,11 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((result) => {
+
+        console.log("result from login ", result)
         if (result.error) {
-          throw result.error;
+          alert(result.error.message)
+          throw result.error
         }
         localStorage.setItem("token", result.token);
         setIsLoggedIn(true);
