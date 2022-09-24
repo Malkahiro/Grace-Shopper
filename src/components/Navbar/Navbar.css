@@ -5,11 +5,22 @@
     font-size: 1.5rem;
     position: sticky;
     border: 2px solid black;
+    background-color: mediumblue;
 }
 #nav-links {
     display: flex;
     flex-direction: row;
     size: 1rem;
     font-size: 1.5rem;
-    justify-content: center;
+    justify-content: right;
+    /* //padding */
+    font-weight: bold;
+    background-color: #fff;
+    
   }
+
+  
+  /* #main-header {
+    background-color: black;
+    text-align: center;
+} */
