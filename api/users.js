@@ -112,13 +112,16 @@ usersRouter.post("/login", async (req, res, next) => {
 });
 
 usersRouter.get('/:username', async (req, res, next) => {
-    const username = req.body
+const usertoken = req.headers.authorization;
+const token = usertoken.split(' ');
+const decoded = jwt.verify(token[1], JWT_SECRET);
+const username = decoded.username
     try {
         const response = await User.getUserByUsername(username)
-
         res.send(response)
     } catch (error) {
-        next(error)
+        
+		console.error(error)
     }
 })
 
