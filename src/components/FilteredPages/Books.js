@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {Link} from 'react-router-dom'
-import './Products.css'
 
-const Products = ({products}) => {
-
-    const results = products.map((product) =>{
+const Books = ({products}) => {
+    console.log(products);
+        const filteredResults = products.filter((product) => product.type === 'Book')
+const results = filteredResults.map((product) =>{
         return (<div key={product.id} className="product">
             <Link to={`/products/${product.id}`}><img src={product.imageURL} alt="image of product" /></Link>
             </div>)
@@ -12,8 +12,12 @@ const Products = ({products}) => {
 
 const content = results?.length ? results : <article><p>No Matching Posts</p></article>
 
-return (<div className="products-list">
+    return ( 
+        <div className="products-list">
     {content}
-</div>)
-};
-export default Products;
+</div>
+     );
+
+}
+ 
+export default Books;

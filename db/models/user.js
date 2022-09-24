@@ -17,7 +17,6 @@ async function getAllUsers() {
       FROM users
     `,
 		);
-		console.log(rows)
 		const allUsers = rows.map((row)=>{
 			delete row.password
 			return row;
@@ -57,14 +56,13 @@ async function createUser( username, password, name, email, address, isAdmin) {
 async function getUserByUsername(username) {
 	try {
 		const user = await client.query(`
-      SELECT id, username, "isAdmin"
+      SELECT *
       FROM users
       WHERE username=$1
     `, [username]
 	)
 		
 		const returnedUser = user.rows[0];
-		console.log("user", user)
 		return returnedUser;
 	} catch (error) {
 		throw error;
