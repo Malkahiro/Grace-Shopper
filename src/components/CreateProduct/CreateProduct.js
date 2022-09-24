@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProduct } from "../../axios-services/index"
 
-const CreateProduct = () => {
+const CreateProduct = ({products, setProducts}) => {
     const [name, setName] = useState("");
     const [released, setReleased] = useState("");
     const [description, setDescription] = useState("");
@@ -30,7 +30,8 @@ const CreateProduct = () => {
         price: price,
         imageURL: image,
       };
-      await createProduct(newProduct);
+      const result = await createProduct(newProduct);
+      setProducts([result, ...products])
       navigateNew();
     } catch (error) {
       console.error(error)

@@ -18,6 +18,9 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((result) => {
+        if (result.error) {
+          throw result.error;
+        }
         localStorage.setItem("token", result.token);
         setIsLoggedIn(true);
         localStorage.setItem("username", username);
