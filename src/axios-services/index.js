@@ -75,6 +75,7 @@ export const createProduct = async (addProduct) => {
     }),
   });
   const result = await response.json();
+  return result;
 };
 
 export const getUser = async (username) => {

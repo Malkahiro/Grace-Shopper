@@ -79,13 +79,14 @@ const App = () => {
         } catch(error){
           console.error(error)
         }
+
       }
       userData()
     }
   } catch (error) {
     console.error(error)
   }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, isAdmin]);
 
   console.log(isAdmin)
   return (
@@ -109,15 +110,17 @@ const App = () => {
         <Route path='/products/movies' element={<Movies isLoggedIn={isLoggedIn} products={searchResults} />} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
         <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
-        {isAdmin && <><Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products} isAdmin={isAdmin} />} />
+        {isAdmin && isLoggedIn && <><Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products} isAdmin={isAdmin} />} />
         <Route path="/users" element={<Users isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
-        <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
+        <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} isAdmin={isAdmin} products={products} setProducts={setProducts} />} />
         <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts}  isAdmin={isAdmin}/>}></Route> </>}
         <Route path="/guestcart" element={<GuestCart setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} />} />
+        <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>}></Route>
+
         </Routes>
 
-        {isAdmin && <Footer isAdmin={isAdmin} />}
+        {isAdmin && isLoggedIn && <Footer isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>}
     </div>
   );
 };
