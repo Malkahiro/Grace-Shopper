@@ -50,7 +50,10 @@ const usersRouter = require("./users")
 apiRouter.use("/users", usersRouter)
 
 const productsRouter = require("./products");
-const { getUserByUsername } = require('../db/models/user');
+
 apiRouter.use("/products", productsRouter)
+
+const cartsRouter = require("./shopping_cart")
+apiRouter.use("/shopping_cart", cartsRouter)
 
 module.exports = apiRouter;
