@@ -33,7 +33,6 @@ const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
   const [products, setProducts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [filterResults, setFilterResults] = useState([]);
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -55,7 +54,6 @@ const App = () => {
         const data = await getProducts();
         setProducts(data);
         setSearchResults(data);
-        setFilterResults(data);
     } 
     getData();
     } catch(error) {
