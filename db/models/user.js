@@ -56,7 +56,7 @@ async function createUser( username, password, name, email, address, isAdmin) {
 async function getUserByUsername(username) {
 	try {
 		const user = await client.query(`
-      SELECT id, username, "isAdmin"
+      SELECT *
       FROM users
       WHERE username=$1
     `, [username]
