@@ -25,7 +25,7 @@ const UserCart = (props) => {
         <div id = "cart">
             <h1>{user.username}'s Cart</h1>
             <div>
-            {userCart.products.map ((product) => {
+            {userCart.products?.map ((product) => {
               return(
               <div key={product.id} className= "cart-products">
                 <p>{product.name}</p>
