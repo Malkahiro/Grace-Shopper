@@ -7,7 +7,8 @@ module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
-  deleteProduct
+  deleteProduct,
+  editProduct
 };
 
 async function createProduct(name, released, description, type, format, creator, genre, isPhysical, price, imageURL) {
@@ -36,8 +37,17 @@ async function editProduct(id, name, released, description, type, format, creato
 		} = await client.query(
 			`
     UPDATE products
-    SET name=($2) AND released=($3) AND description=($4) AND 
-    WHERE
+    SET name=($2),
+    released=($3),
+    description=($4),
+    type=($5),
+    format=($6),
+    creator=($7),
+    genre=($8),
+    "isPhysical"=($9),
+    price=($10),
+    "imageURL"=($11)
+    WHERE id = ($1)
     RETURNING *;
     
   `,
