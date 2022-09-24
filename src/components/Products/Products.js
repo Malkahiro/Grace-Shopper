@@ -5,10 +5,13 @@ import './Products.css'
 
 const Products = ({products, setProducts}) => {
 useEffect(() => {
-    getProducts()
-    .then((newProducts) => {
-        setProducts(newProducts)
+    const getResult = async () => {
+        await getProducts()
+        .then((newProducts) => {
+            setProducts(newProducts)
     })
+    }
+    getResult();
 }, []);
     const results = products.map((product) =>{
         return (<div key={product.id} className="product">

@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
-    const { setIsLoggedIn } = props
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+    const { setIsLoggedIn, username, setUsername, password, setPassword } = props
+
   const navigate = useNavigate();
 
   const submit = async (event) => {
@@ -21,7 +20,7 @@ const Login = (props) => {
       .then((result) => {
         localStorage.setItem("token", result.token);
         setIsLoggedIn(true);
-        console.log("token", result.token)
+        localStorage.setItem("username", username);
       })
       .catch(console.error);
 

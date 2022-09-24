@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { createProduct, getAPIHealth, getProductId, getProducts } from '../axios-services';
+import { createProduct, getAPIHealth, getProductId, getProducts, getUser } from '../axios-services';
 import '../style/App.css';
 import Login from './Login/Login'
 import Register from './Register/Register';
@@ -20,22 +20,24 @@ import DropDown from './DropDown/DropDown';
 import Books from './FilteredPages/Books';
 import Movies from './FilteredPages/Movies';
 import EditDetails from './EditProduct/EditDetails';
+import GuestCart from './GuestCart/GuestCart';
+import UserCart from './UserCart/UserCart';
 
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [APIHealth, setAPIHealth] = useState('');
+  const [products, setProducts] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setIsLoggedIn(true);
     }
   }, []);
-
-  const [APIHealth, setAPIHealth] = useState('');
-  const [products, setProducts] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
-
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
     // first, create an async function that will wrap your axios service adapter
@@ -49,48 +51,70 @@ const App = () => {
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
-    
-    try{
+
+    try {
       const getData = async () =>{
-        const data = await getProducts();
-        setProducts(data);
-        setSearchResults(data);
-    } 
-    getData();
-    } catch(error) {
-      console.error(error)
-    }
+          const data = await getProducts();  
+          setProducts(data);
+          setSearchResults(data);
+      }
+    getData()
+  } catch (error) {
+    console.error(error)
+  }
 
+    
   }, []);
+  useEffect(() => {
+    try{
+    if (localStorage.getItem("token")) {
+      setUsername(localStorage.getItem("username"))
+      const userData = async () => {
+        const user = await getUser(username);
+        console.log(user)
+        if (user.isAdmin === true) {
+          setIsAdmin(true)
+ 
+        }
+      }
+      userData()
+    }
+  } catch (error) {
+    console.error(error)
+  }
+  }, [isLoggedIn]);
 
-
+  console.log(isAdmin)
   return (
     
     <div className="app-container">
-      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
       <SearchBar products={products} setSearchResults={setSearchResults} />
       <DropDown />
       <Routes>
       <Route
           path="/login"
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          element={<Login setIsLoggedIn={setIsLoggedIn} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
         />
         <Route
           path="/register"
-          element={<Register setIsLoggedIn={setIsLoggedIn} />}
+          element={<Register setIsLoggedIn={setIsLoggedIn} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
         />
+
+        <Route path="/products" element={<Products isLoggedIn={isLoggedIn} products={searchResults} setProducts={setProducts}/>} />
         <Route path='/products/books' element={<Books isLoggedIn={isLoggedIn} products={searchResults} />} />
         <Route path='/products/movies' element={<Movies isLoggedIn={isLoggedIn} products={searchResults} />} />
-        <Route path="/products" element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
         <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
-        <Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products}/>} />
-        <Route path="/users" element={<Users isLoggedIn={isLoggedIn} />} />
-        <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} />} />
-        <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts} />}></Route>
-        
+        {isAdmin && <><Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products} isAdmin={isAdmin} />} />
+        <Route path="/users" element={<Users isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
+        <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
+        <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts}  isAdmin={isAdmin}/>}></Route> </>}
+        <Route path="/guestcart" element={<GuestCart setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} />} />
         </Routes>
-        <Footer isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+
+        {isAdmin && <Footer isAdmin={isAdmin} />}
     </div>
   );
 };
