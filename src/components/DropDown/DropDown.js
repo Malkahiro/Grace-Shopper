@@ -6,7 +6,6 @@ const DropDown = () => {
         
         <option value="">{<Link to={'/products/books'}>Books</Link>}</option>
         <option value="">Movie</option>
-        <option value="">Music</option>
     </select> );
 }
  

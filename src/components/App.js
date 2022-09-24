@@ -19,7 +19,6 @@ import Users from './Users/Users';
 import DropDown from './DropDown/DropDown';
 import Books from './FilteredPages/Books';
 import Movies from './FilteredPages/Movies';
-import Music from './FilteredPages/Music';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -84,7 +83,6 @@ const App = () => {
         <Route path="/products" element={<Products isLoggedIn={isLoggedIn}  products={searchResults}/>} />
         <Route path='/products/books' element={<Books isLoggedIn={isLoggedIn} products={searchResults} />} />
         <Route path='/products/movies' element={<Movies isLoggedIn={isLoggedIn} products={searchResults} />} />
-        <Route path='/products/music' element={<Music isLoggedIn={isLoggedIn} products={searchResults} />} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
         <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
         <Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} />} />

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 const Books = ({products}) => {
     console.log(products);
-        const filteredResults = products.filter((product) => product.type === 'book')
+        const filteredResults = products.filter((product) => product.type === 'Book')
 const results = filteredResults.map((product) =>{
         return (<div key={product.id} className="product">
             <Link to={`/products/${product.id}`}><img src={product.imageURL} alt="image of product" /></Link>
