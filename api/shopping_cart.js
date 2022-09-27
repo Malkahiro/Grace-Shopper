@@ -5,10 +5,11 @@ Cart
 } = require("../db/index");
 const {requireUser, requireAdmin } = require('./utils')
 
+
 cartsRouter.get('/:userId', async (req, res, next) => {
     console.log(req.body)
     const userId = req.params.userId
-    console.log(userId)
+
     try {
         const response = await Cart.getUserCart(userId)
 
@@ -49,10 +50,11 @@ cartsRouter.delete('/', requireUser, async (req, res, next) => {
     }
 })
 
-cartsRouter.delete('/:cartId', requireUser, async (req, res, next) => {
+cartsRouter.patch('/:cartId', requireUser, async (req, res, next) => {
     try {
-        const {userId, cartId} = req.body
-        const response = await Cart.deleteUserCart(userId, cartId)
+        const cartId = req.params.cartId
+        const {userId } = req.body
+        const response = await Cart.checkoutCart(userId, cartId)
         res.send(response)
     } catch (error) {
         next(error)
@@ -60,9 +62,10 @@ cartsRouter.delete('/:cartId', requireUser, async (req, res, next) => {
 })
 
 
-cartsRouter.patch('/:cartId', async (req, res, next) => {
+cartsRouter.patch('/:cartId/:productId', requireUser, async (req, res, next) => {
     try {
-        const {cartId, productId, quantity} = req.body
+        const {cartId, productId} = req.params
+        const quantity = req.body
         const response = await Cart.updateProductQuantity(cartId, productId,quantity)
         res.send(response)
     } catch (error){
