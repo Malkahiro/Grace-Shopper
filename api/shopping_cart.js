@@ -6,7 +6,7 @@ Cart
 const {requireUser, requireAdmin } = require('./utils')
 
 cartsRouter.get('/:cartId', async (req, res, next) => {
-    const cartId = req.body
+    const cartId = req.params
     try {
         const response = await Cart.getUserCart(cartId)
 
@@ -47,10 +47,11 @@ cartsRouter.delete('/', requireUser, async (req, res, next) => {
     }
 })
 
-cartsRouter.delete('/:cartId', requireUser, async (req, res, next) => {
+cartsRouter.patch('/:cartId', requireUser, async (req, res, next) => {
     try {
-        const {userId, cartId} = req.body
-        const response = await Cart.deleteUserCart(userId, cartId)
+        const cartId = req.params.cartId
+        const {userId } = req.body
+        const response = await Cart.checkoutCart(userId, cartId)
         res.send(response)
     } catch (error) {
         next(error)
@@ -58,9 +59,10 @@ cartsRouter.delete('/:cartId', requireUser, async (req, res, next) => {
 })
 
 
-cartsRouter.patch('/:cartId', async (req, res, next) => {
+cartsRouter.patch('/:cartId/:productId', requireUser, async (req, res, next) => {
     try {
-        const {cartId, productId, quantity} = req.body
+        const {cartId, productId} = req.params
+        const quantity = req.body
         const response = await Cart.updateProductQuantity(cartId, productId,quantity)
         res.send(response)
     } catch (error){
