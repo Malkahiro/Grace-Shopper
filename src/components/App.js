@@ -22,6 +22,10 @@ import Movies from './FilteredPages/Movies';
 import EditDetails from './EditProduct/EditDetails';
 import GuestCart from './GuestCart/GuestCart';
 import UserCart from './UserCart/UserCart';
+import './App.css'
+import GuestInfo from './GuestInfo/GuestInfo';
+import UserCheckout from './UserCart/UserCheckout';
+
 
 
 const App = () => {
@@ -70,27 +74,28 @@ const App = () => {
     if (localStorage.getItem("token")) {
       setUsername(localStorage.getItem("username"))
       const userData = async () => {
-        const user = await getUser(username);
-        console.log(user)
-        if (user.isAdmin === true) {
-          setIsAdmin(true)
- 
+        try{
+          const user = await getUser(username);
+          if (user.isAdmin === true) {
+            setIsAdmin(true)
+          } 
+        } catch(error){
+          console.error(error)
         }
+
       }
       userData()
     }
   } catch (error) {
     console.error(error)
   }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, isAdmin]);
 
   console.log(isAdmin)
   return (
     
     <div className="app-container">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
-      <SearchBar products={products} setSearchResults={setSearchResults} />
-      <DropDown />
       <Routes>
       <Route
           path="/login"
@@ -100,23 +105,27 @@ const App = () => {
           path="/register"
           element={<Register setIsLoggedIn={setIsLoggedIn} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
         />
-
-        <Route path="/products" element={<Products isLoggedIn={isLoggedIn} products={searchResults} setProducts={setProducts}/>} />
-        <Route path='/products/books' element={<Books isLoggedIn={isLoggedIn} products={searchResults} />} />
-        <Route path='/products/movies' element={<Movies isLoggedIn={isLoggedIn} products={searchResults} />} />
+       <Route path={'/products'} element={<><SearchBar products={products} setSearchResults={setSearchResults} /> <DropDown />
+        <Products isLoggedIn={isLoggedIn} products={searchResults} setProducts={setProducts}/></>} />
+        <Route path='/products/books' element={<> <SearchBar products={products} setSearchResults={setSearchResults} /> <DropDown />
+         <Books isLoggedIn={isLoggedIn} products={searchResults} /> </>} />
+        <Route path='/products/movies' element={<> <SearchBar products={products} setSearchResults={setSearchResults} /> <DropDown />
+         <Movies isLoggedIn={isLoggedIn} products={searchResults} /> </>} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
-        <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
-        {isAdmin && <><Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products} isAdmin={isAdmin} />} />
+        <Route path="/success" element={<Success isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+        {isAdmin && isLoggedIn && <><Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products} isAdmin={isAdmin} />} />
         <Route path="/users" element={<Users isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
-        <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
+        <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} isAdmin={isAdmin} products={products} setProducts={setProducts} />} />
         <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts}  isAdmin={isAdmin}/>}></Route> </>}
         <Route path="/guestcart" element={<GuestCart setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/guestinfo" element={<GuestInfo setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} />} />
+        <Route path="/usercheckout" element={<UserCheckout isLoggedIn={isLoggedIn} />} />
         <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>}></Route>
 
         </Routes>
 
-        {isAdmin && <Footer isAdmin={isAdmin} />}
+        {isAdmin && isLoggedIn && <Footer isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>}
     </div>
   );
 };

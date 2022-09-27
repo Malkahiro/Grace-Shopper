@@ -150,6 +150,8 @@ async function populateInitialData() {
     const cartProduct3 = await Cart.addProductToCart(1, 3)
     const cartProduct4 = await Cart.addProductToCart(2, 4)
     const cartProduct5 = await Cart.addProductToCart(2, 5)
+    
+    
 
     console.log("Finished adding products to carts!")
     console.log("Checking user carts...")

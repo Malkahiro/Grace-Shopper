@@ -18,6 +18,7 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((result) => {
+
         console.log("result from login ", result)
         if (result.error) {
           alert(result.error.message)

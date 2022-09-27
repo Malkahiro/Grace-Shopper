@@ -1,18 +1,9 @@
 import React, { useEffect } from "react";
 import {Link} from 'react-router-dom'
-import { getProducts } from "../../axios-services";
 import './Admin.css'
 
-const Admin = ({products, setProducts}) => {
-useEffect(() => {
-    const getResult = async () => {
-        await getProducts()
-        .then((newProducts) => {
-            setProducts(newProducts)
-    })
-    }
-    getResult();
-}, []);
+const Admin = ({products}) => {
+
 
 return (<div className="products-list">
 <p>Products</p>

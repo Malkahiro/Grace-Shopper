@@ -1,18 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {Link} from 'react-router-dom'
-import { getProducts } from "../../axios-services";
 import './Products.css'
 
-const Products = ({products, setProducts}) => {
-useEffect(() => {
-    const getResult = async () => {
-        await getProducts()
-        .then((newProducts) => {
-            setProducts(newProducts)
-    })
-    }
-    getResult();
-}, []);
+const Products = ({products}) => {
     const results = products.map((product) =>{
         return (<div key={product.id} className="product">
             <Link to={`/products/${product.id}`}><img src={product.imageURL} alt="image of product" /></Link>

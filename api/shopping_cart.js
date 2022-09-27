@@ -5,10 +5,13 @@ Cart
 } = require("../db/index");
 const {requireUser, requireAdmin } = require('./utils')
 
-cartsRouter.get('/:cartId', async (req, res, next) => {
-    const cartId = req.params
+
+cartsRouter.get('/:userId', async (req, res, next) => {
+    console.log(req.body)
+    const userId = req.params.userId
+
     try {
-        const response = await Cart.getUserCart(cartId)
+        const response = await Cart.getUserCart(userId)
 
         res.send(response)
     } catch (error) {
