@@ -105,8 +105,6 @@ const App = () => {
           path="/register"
           element={<Register setIsLoggedIn={setIsLoggedIn} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
         />
-        
-       { <>
        <Route path={'/products'} element={<><SearchBar products={products} setSearchResults={setSearchResults} /> <DropDown />
         <Products isLoggedIn={isLoggedIn} products={searchResults} setProducts={setProducts}/></>} />
         <Route path='/products/books' element={<> <SearchBar products={products} setSearchResults={setSearchResults} /> <DropDown />
