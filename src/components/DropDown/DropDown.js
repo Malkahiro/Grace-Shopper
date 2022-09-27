@@ -1,12 +1,16 @@
 import React from "react";
 import { Link} from "react-router-dom";
+import './DropDown.css'
 
 const DropDown = () => {
-    return ( <ul>
-        <li><Link to={'/products'}>All</Link></li>
-        <li><Link to={'/products/books'}>Books</Link></li>
-        <li><Link to={'/products/movies'}>Movies</Link></li>
-    </ul> );
+    return ( <div className="dropdown">
+        <button className="dropbtn">Type</button>
+        <div className="dropdown-content">
+        <Link to={'/products'}>All</Link>
+        <Link to={'/products/books'}>Books</Link>
+        <Link to={'/products/movies'}>Movies</Link>
+        </div>
+        </div> );
 }
  
 export default DropDown;
