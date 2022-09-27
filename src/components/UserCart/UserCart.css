@@ -1,0 +1,33 @@
+#img{
+    width: 80px;
+    height: 105px;
+    padding-right: .5rem;
+    margin-top: 1.25rem;
+}
+.cart-products {
+    display: flex;
+    padding: 1rem;
+    border-bottom: solid black 1px;
+    margin: .5rem
+}
+#totals {
+    margin-left: 80%;
+}
+#title {
+   display: flex;
+   justify-content: center;
+}
+#success-link {
+    display: flex;
+   justify-content: center;
+   padding-bottom: 3rem;
+}
+#quantity {
+    display: flex;
+    justify-content: left;
+}
+.q-btn {
+    height:30px;
+    width: 30px;
+    margin: .5rem;
+}

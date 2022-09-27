@@ -9,7 +9,7 @@ const GuestCart = () => {
             <h1>Guest's Cart</h1>
             <Link 
             id= "success-link"
-            to= "/success">Submit</Link>
+            to= "/guestinfo">Checkout As Guest</Link>
         </div>
     )
 }
