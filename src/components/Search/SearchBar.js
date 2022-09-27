@@ -12,7 +12,8 @@ const SearchBar = ({products, setSearchResults}) => {
         if(!event.target.value){
             return setSearchResults(products)
         }
-        const resultsArr = products.filter((product) => product.name.includes(event.target.value));
+        const resultsArr = products.filter((product) => product.name.toLowerCase().includes(event.target.value) 
+        || product.creator.toLowerCase().includes(event.target.value));
         setSearchResults(resultsArr);
     }
     return (
