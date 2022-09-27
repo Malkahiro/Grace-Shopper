@@ -106,7 +106,6 @@ const App = () => {
           element={<Register setIsLoggedIn={setIsLoggedIn} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
         />
         
-       { <>
        <Route path={'/products'} element={<><SearchBar products={products} setSearchResults={setSearchResults} /> <DropDown />
         <Products isLoggedIn={isLoggedIn} products={searchResults} setProducts={setProducts}/></>} />
         <Route path='/products/books' element={<> <SearchBar products={products} setSearchResults={setSearchResults} /> <DropDown />
@@ -123,10 +122,8 @@ const App = () => {
         <Route path="/guestinfo" element={<GuestInfo setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} />} />
         <Route path="/usercheckout" element={<UserCheckout isLoggedIn={isLoggedIn} />} />
-        <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>}></Route>
-
+        <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>} />
         </Routes>
-
         {isAdmin && isLoggedIn && <Footer isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>}
     </div>
   );
