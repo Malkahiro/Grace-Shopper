@@ -1,0 +1,65 @@
+.dropbtn{
+
+    background-color: salmon;
+    
+    color: white;
+    
+    width: 100px;
+    
+    padding: 18px;
+    
+    border: 0;
+    
+    font-size: 17px;
+    
+    }
+
+    .dropdown {
+
+        position: relative;
+        
+        display: inline-block;
+        
+        width: 160px;
+        
+    }
+
+        .dropdown-content {
+
+            display: none;
+            
+            background-color: whitesmoke;
+            
+            width: 100%;
+            
+    }
+
+    .dropdown-content a {
+
+display: block;
+
+color: black;
+
+padding: 12px;
+
+text-decoration: none;
+
+}
+
+.dropdown:hover .dropbtn {
+
+    background-color: sandybrown;
+    
+    }
+    
+    .dropdown-content a:hover {
+    
+    background-color: lightgrey;
+    
+    }
+    
+    .dropdown:hover .dropdown-content {
+    
+    display: block;
+    
+    }

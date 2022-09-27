@@ -7,6 +7,7 @@ const SingleProduct = ({detailedProduct}) => {
         <img src={detailedProduct.imageURL} alt="detailed picture" />
         <p>{detailedProduct.price}</p>
         <p>{detailedProduct.released}</p>
+        <button>Add To Cart</button>
     </div> );
 }
  
