@@ -138,6 +138,19 @@ export async function editProduct(
   return result;
 }
 
+export const createUserCart = async (userId) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`/api/shopping_cart/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+  });
+  const result = await response.json();
+  return result;
+};
+
 export const getUserCart = async (id) =>{
   try{
       const response = await fetch(`/api/shopping_cart/${id}`);
@@ -148,7 +161,24 @@ export const getUserCart = async (id) =>{
   }
 }
 
-export const deleteUserItem = async (productId, cartId) => {
+export const addProcuctToCart = async (cartId, productId) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`/api/shopping_cart/${cartId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      cart: cartId,
+      product: productId,
+    }),
+  });
+  const result = await response.json();
+  return result;
+};
+
+export const deleteProductFromCart = async (cartId, productId) => {
   try {
     const token = localStorage.getItem("token");
     const response = await fetch(`/api/shopping_cart/`, {
@@ -164,3 +194,34 @@ export const deleteUserItem = async (productId, cartId) => {
     console.error(error);
   }
 };
+
+export const deleteUserCart = async (userId, cartId) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`/api/shopping_cart/${cartId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.data
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export async function updateProductQuantity(cartId, productId, quantity) {
+  const response = await fetch(`api/products/${cartId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer `,
+    },
+    body: JSON.stringify({
+      quantity: quantity,
+    }),
+  });
+  const result = await response.json();
+  return result;
+}
