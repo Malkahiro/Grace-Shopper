@@ -23,6 +23,9 @@ import EditDetails from './EditProduct/EditDetails';
 import GuestCart from './GuestCart/GuestCart';
 import UserCart from './UserCart/UserCart';
 import './App.css'
+import GuestInfo from './GuestInfo/GuestInfo';
+import UserCheckout from './UserCart/UserCheckout';
+
 
 
 const App = () => {
@@ -73,7 +76,6 @@ const App = () => {
       const userData = async () => {
         try{
           const user = await getUser(username);
-          console.log(user)
           if (user.isAdmin === true) {
             setIsAdmin(true)
           } 
@@ -112,14 +114,15 @@ const App = () => {
         <Route path='/products/movies' element={<> <SearchBar products={products} setSearchResults={setSearchResults} /> <DropDown />
          <Movies isLoggedIn={isLoggedIn} products={searchResults} /> </>} />
         <Route path='/products/:id' element={<ProductDetails products={products} />}></Route>
-        </>}
-        <Route path="/success" element={<Success isLoggedIn={isLoggedIn} />} />
+        <Route path="/success" element={<Success isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
         {isAdmin && isLoggedIn && <><Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products} isAdmin={isAdmin} />} />
         <Route path="/users" element={<Users isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
         <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} isAdmin={isAdmin} products={products} setProducts={setProducts} />} />
         <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts}  isAdmin={isAdmin}/>}></Route> </>}
         <Route path="/guestcart" element={<GuestCart setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/guestinfo" element={<GuestInfo setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} />} />
+        <Route path="/usercheckout" element={<UserCheckout isLoggedIn={isLoggedIn} />} />
         <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>}></Route>
 
         </Routes>

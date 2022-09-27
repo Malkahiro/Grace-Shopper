@@ -142,9 +142,25 @@ export const getUserCart = async (id) =>{
   try{
       const response = await fetch(`/api/shopping_cart/${id}`);
       const result = await response.json();
-      console.log({result, line:145})
       return result;
   } catch (error){
       console.error(error)
   }
 }
+
+export const deleteUserItem = async (productId, cartId) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`/api/shopping_cart/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = response.data
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
