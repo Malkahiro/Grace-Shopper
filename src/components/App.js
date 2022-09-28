@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { createProduct, getAPIHealth, getProductId, getProducts, getUser } from '../axios-services';
+import { getAPIHealth, getProducts, getUser } from '../axios-services';
 import '../style/App.css';
 import Login from './Login/Login'
 import Register from './Register/Register';
@@ -79,8 +79,7 @@ const App = () => {
   } catch (error) {
     console.error(error)
   }
-  }, [isLoggedIn, isAdmin]);
-  console.log(isAdmin)
+  }, [isLoggedIn, isAdmin, username]);
   return (
     <div className="app-container">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
