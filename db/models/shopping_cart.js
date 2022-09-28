@@ -7,7 +7,7 @@ module.exports = {
   createUserCart,
   addProductToCart,
 deleteProductFromCart,
-deleteUserCart,
+checkoutCart,
 getUserCart,
 updateProductQuantity
 };
@@ -61,18 +61,13 @@ async function deleteProductFromCart(cartId, productId) {
     }
 }
 
-async function deleteUserCart(userId, cartId) {
+async function checkoutCart(cartId) {
     try{
-        await client.query(`
-        DELETE FROM cart_products
-        WHERE "cartId" = $1
-        `, [cartId]
-        )
         await client.query(`
         UPDATE shopping_cart
         SET "isPaid"=TRUE
-        WHERE "userId" = $1
-        `, [userId]
+        WHERE "cartId" = $1
+        `, [cartId]
         )
     } catch (error) {
         throw (error)

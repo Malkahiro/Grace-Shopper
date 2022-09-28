@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UserCart.css"
 import { getUser, getUserCart } from '../../axios-services'
-
 const UserCart = (props) => {
   let subTotal = 0;
   let totalPrice = 0;
@@ -15,7 +14,6 @@ const UserCart = (props) => {
   const navigateNew = () => {
     navigate("/usercheckout");
   };
-
     useEffect(() => {
       getUser(username)
         .then((results) => {
@@ -32,8 +30,6 @@ const UserCart = (props) => {
         }
       }
     }, [])
-
-
     const total = userCart.products?.map((product) => {
       console.log(product)
       const cost = product.price
@@ -41,9 +37,6 @@ const UserCart = (props) => {
         fee = 3.99;
         totalPrice = subTotal + fee;
     })
-    
-    
-
     return (
         <div id = "cart">
             <h1 id="title">{user.username}'s Cart</h1>
@@ -67,7 +60,7 @@ const UserCart = (props) => {
                 </div>
               )
             }
-            )} 
+            )}
             </div>
             <div id="totals">
             <p>Subtotal: ${subTotal}.00</p>
@@ -84,7 +77,7 @@ const UserCart = (props) => {
               Checkout
             </button>
             ): null}
-            </div> 
+            </div>
         </div>
     )
 }
