@@ -29,7 +29,7 @@ const UserCart = (props) => {
           setPay(false)
         }
       }
-    }, [])
+    }, [username])
     const total = userCart.products?.map((product) => {
       console.log(product)
       const cost = product.price
@@ -44,7 +44,7 @@ const UserCart = (props) => {
             {userCart.products?.map ((product) => {
               return(
               <div key={product.id} className= "cart-products">
-                  <img src={product.imageURL} id="img"></img>
+                  <img src={product.imageURL} id="img" alt="user-cart"></img>
                 <div>
                 <h3>{product.name}</h3>
                 <p>${product.price}.00</p>
