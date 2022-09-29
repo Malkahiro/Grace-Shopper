@@ -66,7 +66,7 @@ async function checkoutCart(cartId) {
         await client.query(`
         UPDATE shopping_cart
         SET "isPaid"=TRUE
-        WHERE "cartId" = $1
+        WHERE id = $1
         `, [cartId]
         )
     } catch (error) {
@@ -85,8 +85,6 @@ async function attatchProductsToCart(cart) {
           JOIN cart_products ON cart_products."productId" = products.id
           WHERE cart_products."cartId" = $1
         `, [cart.id]);
-
-        console.log("rows from attatch: ", rows)
     
         cart.products = rows
 
