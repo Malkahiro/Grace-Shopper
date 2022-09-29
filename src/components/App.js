@@ -106,7 +106,7 @@ const App = () => {
         <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts}  isAdmin={isAdmin} username={username}/>}></Route> </>}
         <Route path="/guestcart" element={<GuestCart setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/guestinfo" element={<GuestInfo setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} />} />
+        <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} products={products}/>} />
         <Route path="/usercheckout" element={<UserCheckout isLoggedIn={isLoggedIn} />} />
         <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>}></Route>
         </Routes>

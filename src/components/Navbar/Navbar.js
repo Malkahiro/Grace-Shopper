@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css"
 
-const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+const Navbar = ({ isLoggedIn, setIsLoggedIn, setIsAdmin }) => {
   return (
     <div id="nav-bar" style={{ position: "sticky" }}>
       <h3 id="nav-title">Gungan Gifts</h3>
@@ -19,6 +19,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                   onClick={() => {
                     localStorage.removeItem("token");
                     setIsLoggedIn(false);
+                    setIsAdmin(false);
                   }}
                 >
                   Logout

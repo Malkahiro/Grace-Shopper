@@ -13,6 +13,7 @@ const handleSubmit = async (event) =>{
     try{
         event.preventDefault()
         await addProductToCart(detailedProduct.id)
+        alert(detailedProduct.name, " Added To Cart")
         navigateNew()
     } catch(error){
         console.error(error)

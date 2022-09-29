@@ -169,15 +169,18 @@ export const addProductToCart = async (productId) => {
   return result;
 };
 
-export const deleteProductFromCart = async (cartId, productId) => {
+export const deleteProductFromCart = async (productId) => {
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`/api/shopping_cart/${cartId}/${productId}`, {
+    const response = await fetch(`/api/shopping_cart/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({
+        productId
+      }),
     });
     const result = response.data
     return result;
