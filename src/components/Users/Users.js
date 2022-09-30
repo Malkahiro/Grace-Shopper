@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getUsers } from "../../axios-services";
+import './Users.css'
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -12,7 +13,7 @@ const Users = () => {
         .catch((error) => console.error(error));
     }, []);
     return (
-<div>
+<div id="user-container">
 <h1>Users</h1>
 {users.map((user) => (
     <div className="post-box" key={user.id}>

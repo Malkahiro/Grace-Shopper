@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { addProductToCart } from '../../axios-services';
+import './SingleProduct.css'
 
 const SingleProduct = (props) => {
     const {detailedProduct} = props;
@@ -15,7 +16,7 @@ const handleSubmit = async (event) =>{
     return ( <div className="single-product">
         <h1>{detailedProduct.name}</h1>
         <h2>{detailedProduct.creator}</h2>
-        <img src={detailedProduct.imageURL} alt="detailed picture" />
+        <img src={detailedProduct.imageURL} alt="product" />
         <p>{detailedProduct.price}</p>
         <p>{detailedProduct.released}</p>
         <button onClick={handleSubmit}>Add To Cart</button>

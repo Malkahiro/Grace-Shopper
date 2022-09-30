@@ -1,0 +1,15 @@
+#newProductBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#newProduct{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 50%;
+    height: 75;
+}

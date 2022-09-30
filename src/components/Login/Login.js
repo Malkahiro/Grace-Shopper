@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './Login.css'
 
 const Login = (props) => {
     const { setIsLoggedIn, username, setUsername, password, setPassword } = props
