@@ -32,6 +32,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, setIsAdmin }) => {
           ) : (
             <div>
               <div>
+              <span>
+                  <Link to="/">Home</Link>
+                </span>
                 <span>
                   <Link to="/login">Login</Link>
                 </span>
@@ -39,7 +42,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, setIsAdmin }) => {
                   <Link to="/register">Register</Link>
                 </span>
                 <span>
-                  <Link to="/guestcart">Cart</Link>
+                  <Link to="/usercart">Cart</Link>
                 </span>
               </div>
             </div>

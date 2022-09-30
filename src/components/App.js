@@ -20,11 +20,10 @@ import DropDown from './DropDown/DropDown';
 import Books from './FilteredPages/Books';
 import Movies from './FilteredPages/Movies';
 import EditDetails from './EditProduct/EditDetails';
-import GuestCart from './GuestCart/GuestCart';
 import UserCart from './UserCart/UserCart';
 import './App.css'
-import GuestInfo from './GuestInfo/GuestInfo';
-import UserCheckout from './UserCart/UserCheckout';
+
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -104,11 +103,9 @@ const App = () => {
         <Route path="/users" element={<Users isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
         <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} isAdmin={isAdmin} products={products} setProducts={setProducts} />} />
         <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts}  isAdmin={isAdmin} username={username}/>}></Route> </>}
-        <Route path="/guestcart" element={<GuestCart setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/guestinfo" element={<GuestInfo setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} products={products}/>} />
-        <Route path="/usercheckout" element={<UserCheckout isLoggedIn={isLoggedIn} />} />
-        <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>}></Route>
+        <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} products={products} username={username}/>} />
+        <Route exact path={'/'} element={<><SearchBar products={products} setSearchResults={setSearchResults} /> <DropDown />
+        <Products isLoggedIn={isLoggedIn} products={searchResults} setProducts={setProducts}/></>} />
         </Routes>
         {isAdmin && isLoggedIn && <Footer isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>}
     </div>

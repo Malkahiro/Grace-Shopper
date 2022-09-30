@@ -56,6 +56,7 @@ cartsRouter.delete('/', requireUser, async (req, res, next) => {
 
 cartsRouter.patch('/:cartId', requireUser, async (req, res, next) => {
     try {
+        console.log("checkout path")
         const cartId = req.params.cartId
         const response = await Cart.checkoutCart(cartId)
         res.send(response)
@@ -67,8 +68,9 @@ cartsRouter.patch('/:cartId', requireUser, async (req, res, next) => {
 
 cartsRouter.patch('/:cartId/:productId', requireUser, async (req, res, next) => {
     try {
+        console.log("update path")
         const {cartId, productId} = req.params
-        const quantity = req.body
+        const quantity = req.body.quantity
         const response = await Cart.updateProductQuantity(cartId, productId,quantity)
         res.send(response)
     } catch (error){

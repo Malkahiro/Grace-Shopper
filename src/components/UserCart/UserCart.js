@@ -9,31 +9,26 @@ const UserCart = (props) => {
   let totalPrice = 0;
   let fee = 0;
     const username = props.username;
-    const [user, setUser] = useState('');
     const [userCart, setUserCart] = useState({products:[]});
     const [pay, setPay] = useState(true);
     const navigate = useNavigate();
   const navigateNew = () => {
-    navigate("/usercheckout");
+    navigate("/success");
   };
   
 
   useEffect(() => {
-    console.log("changes")
 
   }, [userCart])
   const handleDelete = (productId, event) => {
     event.preventDefault();
     try{
       const updatedCart = userCart.products.filter((deletedProduct) =>{
-        console.log(productId)
-        console.log (deletedProduct.id)
         return deletedProduct.id !== productId})
       
      deleteProductFromCart(productId)
      const otherCart = {...userCart, products: updatedCart}
      setUserCart(otherCart)
-     console.log(otherCart)
   } catch(error){
       console.error(error)
   }
@@ -42,7 +37,7 @@ const UserCart = (props) => {
     try{
         event.preventDefault()
        const cartId = userCart.id
-       const finishedCart = await checkoutCart(cartId)
+       await checkoutCart(cartId)
        navigateNew();
     } catch(error){
         console.error(error)
@@ -53,17 +48,26 @@ const UserCart = (props) => {
     useEffect(() => {
       getUser(username)
         .then((results) => {
-          setUser(results);
-          cartData(results.id)
+          cartData(results)
         })
         .catch((error) => console.error(error));
-      const cartData = async (id) => {
-      const cart = await getUserCart(id)
+      const cartData = async (results) => {
+        if (results?.id) {
+          const cart = await getUserCart(results.id)
         if (cart) {
           setUserCart(cart)
         } else {
           setPay(false)
           }
+        } else {
+          const cart = localStorage.getItem("products")
+          if (cart) {
+            const cartProducts = JSON.parse(cart)
+            setUserCart({products: cartProducts})
+          } else {
+            setPay(false)
+          }
+        }
         }
     }, [username])
     
@@ -78,7 +82,7 @@ const UserCart = (props) => {
 
     return (
         <div id = "cart">
-            <h1 id="title">{user.username}'s Cart</h1>
+            <h1 id="title">{username || "Guest"}'s Cart</h1>
             <div>
             {userCart.products?.map ((product) => {
               const deletedProduct = product.id
@@ -89,10 +93,17 @@ const UserCart = (props) => {
                 <h3>{product.name}</h3>
                 <p>${product.price}.00</p>
                 <p>{product.creator}</p>
-                <p>Quantity:</p>
+                <label className="postTitles">Quantity: </label>
+            <br />
+            <input
+              size={"3"}
+              minLength={1}
+              type="text"
+              title="name"
+              required
+            />
                 <div id = "quantity">
-                <button id = "plus" className="q-btn">+</button>
-                <button id = "minus" className="q-btn">-</button>
+                <button id = "update-quantity" className="btn">Update Quantity</button>
                 </div>
                 <br />
                 <button onClick={(event) => handleDelete(deletedProduct, event)}>Remove Item</button>

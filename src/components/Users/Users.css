@@ -1,0 +1,11 @@
+#user {
+    margin: 1rem;
+    border: solid black 1px;
+    padding: 1rem;
+}
+
+#heading {
+display: flex;
+justify-content: center;
+text-decoration: underline;
+}
