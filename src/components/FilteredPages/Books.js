@@ -6,7 +6,7 @@ const Books = ({products}) => {
         const filteredResults = products.filter((product) => product.type === 'Book')
 const results = filteredResults.map((product) =>{
         return (<div key={product.id} className="product">
-            <Link to={`/products/${product.id}`}><img src={product.imageURL} alt="image of product" /></Link>
+            <Link to={`/products/${product.id}`}><img src={product.imageURL} alt="ibook" /></Link>
             </div>)
     })
 

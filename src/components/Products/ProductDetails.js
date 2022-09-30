@@ -12,9 +12,8 @@ const detailedProduct = products.filter((product) => {
   return product.id === id
 });
 
-console.log(detailedProduct);
-
-    return ( <div>
+    return ( 
+    <div>
      {detailedProduct?.length && <SingleProduct detailedProduct={detailedProduct[0]} />}
       <Link to={'/products'}>Back to products</Link>
     </div> );
