@@ -23,10 +23,10 @@ const handleSubmit = async (event) =>{
 
     return ( <div className="single-product">
         <h1>{detailedProduct.name}</h1>
-        <h2>{detailedProduct.creator}</h2>
+        <h2>By: {detailedProduct.creator}</h2>
         <img src={detailedProduct.imageURL} alt="detailed" />
-        <p>{detailedProduct.price}</p>
-        <p>{detailedProduct.released}</p>
+        <p>${detailedProduct.price}</p>
+        <p>Released in {detailedProduct.released}</p>
         <button onClick={handleSubmit}>Add To Cart</button>
     </div> );
 }
