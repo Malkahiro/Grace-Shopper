@@ -81,7 +81,7 @@ export const createProduct = async (addProduct) => {
 export const getUser = async (username) => {
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`api/users/${username}`, {
+    const response = await fetch(`/api/users/${username}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -112,10 +112,10 @@ export const deleteProduct = async (Id) => {
 };
 export async function editProduct(
   productId,
-  token,
   { name, released, description, type, format, creator, genre, isPhysical, price, imageURL }
 ) {
-  const response = await fetch(`api/products/${productId}`, {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`/api/products/${productId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -242,7 +242,7 @@ export async function updateProductQuantity(cartId, productId, quantity) {
        return;
   }
   console.log(quantity)
-  const response = await fetch(`api/shopping_cart/${cartId}/${productId}`, {
+  const response = await fetch(`/api/shopping_cart/${cartId}/${productId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

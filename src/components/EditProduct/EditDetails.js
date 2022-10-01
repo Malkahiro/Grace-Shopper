@@ -10,7 +10,7 @@ const detailedProduct = products.filter((product) => {
 });
 
     return ( <div>
-     {detailedProduct?.length && <EditProduct detailedProduct={detailedProduct[0]} setProducts={setProducts} />}
+     {detailedProduct?.length && <EditProduct detailedProduct={detailedProduct[0]} setProducts={setProducts} products={products} />}
       <Link to={'/admin'}>Back to products</Link>
     </div> );
 }
