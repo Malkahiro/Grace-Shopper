@@ -10,10 +10,11 @@ const SingleProduct = (props) => {
       navigate("/products");
     };
 
+
 const handleSubmit = async (event) =>{
     try{
         event.preventDefault()
-        await addProductToCart(detailedProduct.id)
+        await addProductToCart(detailedProduct)
         alert(detailedProduct.name, " Added To Cart")
         navigateNew()
     } catch(error){

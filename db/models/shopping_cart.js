@@ -98,16 +98,16 @@ async function attatchProductsToCart(cart) {
 
 async function getUserCart(id) {
     try {
-       const userWithCart = await client.query(`
-        SELECT shopping_cart.*, users.id AS "userId", users.username, users.address
-        FROM shopping_cart
-        JOIN users ON shopping_cart."userId" = users.id
-        WHERE shopping_cart."userId" = $1 AND "isPaid" = FALSE
-        `, [id])
-
-
-        const cartWithProducts = await attatchProductsToCart(userWithCart.rows[0])
-        return cartWithProducts
+            const userWithCart = await client.query(`
+            SELECT shopping_cart.*, users.id AS "userId", users.username, users.address
+            FROM shopping_cart
+            JOIN users ON shopping_cart."userId" = users.id
+            WHERE shopping_cart."userId" = $1 and "isPaid" = FALSE
+            `, [id])
+    if (!userWithCart.rows.length) {return false}
+            const cartWithProducts = await attatchProductsToCart(userWithCart.rows[0])
+            return cartWithProducts
+      
     } catch (error){
         console.error(error)
         throw(error)
@@ -119,7 +119,8 @@ async function updateProductQuantity(cartId, productId, quantity){
         await client.query(`
         UPDATE cart_products
         SET quantity=($3)
-        WHERE "cartID" = ($1) AND "productId" = ($2)
+        WHERE "cartId" = ($1) AND "productId" = ($2)
+        RETURNING *
         `, [cartId, productId, quantity])
     } catch (error) {
         throw(error)
