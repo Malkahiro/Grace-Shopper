@@ -15,3 +15,28 @@ return (<div className="products-list">
 </div>)
 };
 export default Admin;
+
+//admin edit products
+// export async function adminEditProduct(productName, productCreator, productPrice, productReleased) {
+// 	try {
+// 		return fetch(`${BASE_URL}/products/${productId}`, {
+// 			method: "PATCH",
+// 			headers: {
+// 				"Content-Type": "application/json",
+// 			},
+// 			body: JSON.stringify({
+// 				name: productName,
+// 				creator: productCreator,
+// 				price: productPrice,
+// 				released: productReleased,
+			
+// 			}),
+// 		})
+// 			.then((response) => response.json())
+// 			.then((result) => {
+// 				return result;
+// 			});
+// 	} catch (error) {
+// 		console.error(error)
+// 	}
+// }
