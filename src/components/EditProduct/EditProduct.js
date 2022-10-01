@@ -32,7 +32,7 @@ const EditProduct = (props) => {
         <form id="edit-product" onSubmit={handleSubmit}>
         <h1>{detailedProduct.name}</h1>
         <h2>{detailedProduct.creator}</h2>
-        <img src={detailedProduct.imageURL} alt="detailed picture" />
+        <img src={detailedProduct.imageURL} alt=" edit detailed" />
         <p>{detailedProduct.price}</p>
         <p>{detailedProduct.released}</p>
         </form>
