@@ -51,7 +51,7 @@ async function editProduct(id, name, released, description, type, format, creato
     RETURNING *;
     
   `,
-			[name, released, description, type, format, creator, genre, isPhysical, price, imageURL]
+			[id, name, released, description, type, format, creator, genre, isPhysical, price, imageURL]
 		);
 		return product;
 	} catch (error) {
