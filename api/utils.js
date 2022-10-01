@@ -1,8 +1,7 @@
 function requireUser(req, res, next) {
-    console.log("REQ.USER FROM REQUIREUSER-->", req.user)
     if (!req.user) {
        res.status(401);
-        next({
+        return next({
            error: 'Error!',
            name: 'MissingUserError',
            message: 'You must be logged in to perform this action'
@@ -12,7 +11,6 @@ function requireUser(req, res, next) {
   }
 
   function requireAdmin(req, res, next) {
-     console.log("require", req.user)
     if (!req.user.isAdmin) {
         res.status(401)
         return next({
@@ -22,7 +20,6 @@ function requireUser(req, res, next) {
         })
     }
     next();
-    console.log("require")
   }
   
   module.exports = {

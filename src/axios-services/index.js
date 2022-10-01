@@ -138,22 +138,14 @@ export async function editProduct(
   return result;
 }
 
-export const createUserCart = async (userId) => {
-  const token = localStorage.getItem("token");
-  const response = await fetch(`/api/shopping_cart/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
-    },
-  });
-  const result = await response.json();
-  return result;
-};
-
-export const getUserCart = async (id) =>{
+export const getUserCart = async () =>{
   try{
-      const response = await fetch(`/api/shopping_cart/${id}`);
+    const token = localStorage.getItem("token");
+      const response = await fetch(`/api/shopping_cart/`,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }});
       const result = await response.json();
       return result;
   } catch (error){
@@ -161,24 +153,23 @@ export const getUserCart = async (id) =>{
   }
 }
 
-export const addProcuctToCart = async (cartId, productId) => {
+export const addProductToCart = async (productId) => {
   const token = localStorage.getItem("token");
-  const response = await fetch(`/api/shopping_cart/${cartId}`, {
+  const response = await fetch(`/api/shopping_cart/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify({
-      cart: cartId,
-      product: productId,
+      productId
     }),
   });
   const result = await response.json();
   return result;
 };
 
-export const deleteProductFromCart = async (cartId, productId) => {
+export const deleteProductFromCart = async (productId) => {
   try {
     const token = localStorage.getItem("token");
     const response = await fetch(`/api/shopping_cart/`, {
@@ -187,6 +178,9 @@ export const deleteProductFromCart = async (cartId, productId) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({
+        productId
+      }),
     });
     const result = response.data
     return result;
@@ -195,11 +189,11 @@ export const deleteProductFromCart = async (cartId, productId) => {
   }
 };
 
-export const deleteUserCart = async (userId, cartId) => {
+export const checkoutCart = async (cartId) => {
   try {
     const token = localStorage.getItem("token");
     const response = await fetch(`/api/shopping_cart/${cartId}`, {
-      method: "DELETE",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -212,7 +206,7 @@ export const deleteUserCart = async (userId, cartId) => {
   }
 };
 export async function updateProductQuantity(cartId, productId, quantity) {
-  const response = await fetch(`api/products/${cartId}`, {
+  const response = await fetch(`api/products/${cartId}/${productId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

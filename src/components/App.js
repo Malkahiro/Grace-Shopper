@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { createProduct, getAPIHealth, getProductId, getProducts, getUser } from '../axios-services';
+import { getAPIHealth, getProducts, getUser } from '../axios-services';
 import '../style/App.css';
 import Login from './Login/Login'
 import Register from './Register/Register';
@@ -25,9 +25,6 @@ import UserCart from './UserCart/UserCart';
 import './App.css'
 import GuestInfo from './GuestInfo/GuestInfo';
 import UserCheckout from './UserCart/UserCheckout';
-
-
-
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -36,7 +33,6 @@ const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
   const [products, setProducts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setIsLoggedIn(true);
@@ -50,15 +46,12 @@ const App = () => {
       const { healthy } = await getAPIHealth();
       setAPIHealth(healthy ? 'api is up! :D' : 'api is down :/');
     };
-    
-
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
-
     try {
       const getData = async () =>{
-          const data = await getProducts();  
+          const data = await getProducts();
           setProducts(data);
           setSearchResults(data);
       }
@@ -66,8 +59,6 @@ const App = () => {
   } catch (error) {
     console.error(error)
   }
-
-    
   }, []);
   useEffect(() => {
     try{
@@ -78,22 +69,18 @@ const App = () => {
           const user = await getUser(username);
           if (user.isAdmin === true) {
             setIsAdmin(true)
-          } 
+          }
         } catch(error){
           console.error(error)
         }
-
       }
       userData()
     }
   } catch (error) {
     console.error(error)
   }
-  }, [isLoggedIn, isAdmin]);
-
-  console.log(isAdmin)
+  }, [isLoggedIn, isAdmin, username]);
   return (
-    
     <div className="app-container">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
       <Routes>
@@ -116,18 +103,15 @@ const App = () => {
         {isAdmin && isLoggedIn && <><Route path="/admin" element={<Admin isLoggedIn={isLoggedIn} setProducts={setProducts} products={products} isAdmin={isAdmin} />} />
         <Route path="/users" element={<Users isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
         <Route path="/createproduct" element={<CreateProduct isLoggedIn={isLoggedIn} isAdmin={isAdmin} products={products} setProducts={setProducts} />} />
-        <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts}  isAdmin={isAdmin}/>}></Route> </>}
+        <Route path='/editproduct/:id' element={<EditDetails products={products} setProducts={setProducts}  isAdmin={isAdmin} username={username}/>}></Route> </>}
         <Route path="/guestcart" element={<GuestCart setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/guestinfo" element={<GuestInfo setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} />} />
+        <Route path="/usercart" element={<UserCart isLoggedIn={isLoggedIn} products={products}/>} />
         <Route path="/usercheckout" element={<UserCheckout isLoggedIn={isLoggedIn} />} />
         <Route exact path='/' element={<Products isLoggedIn={isLoggedIn} products={searchResults}  setProducts={setProducts}/>}></Route>
-
         </Routes>
-
         {isAdmin && isLoggedIn && <Footer isAdmin={isAdmin} isLoggedIn={isLoggedIn}/>}
     </div>
   );
 };
-
 export default App;

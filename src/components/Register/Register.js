@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Register.css"
 
 
 const Register = (props) => {
-  const { setIsLoggedIn, username, setUsername, password, setPassword } = props
+  const { username, setUsername, password, setPassword } = props
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");

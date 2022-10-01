@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UserCart.css"
-import { getUser, getUserCart } from '../../axios-services'
+import { getUser, getUserCart, deleteProductFromCart, checkoutCart } from '../../axios-services'
+
 
 const UserCart = (props) => {
   let subTotal = 0;
@@ -15,6 +16,39 @@ const UserCart = (props) => {
   const navigateNew = () => {
     navigate("/usercheckout");
   };
+  
+
+  useEffect(() => {
+    console.log("changes")
+
+  }, [userCart])
+  const handleDelete = (productId, event) => {
+    event.preventDefault();
+    try{
+      const updatedCart = userCart.products.filter((deletedProduct) =>{
+        console.log(productId)
+        console.log (deletedProduct.id)
+        return deletedProduct.id !== productId})
+      
+     deleteProductFromCart(productId)
+     const otherCart = {...userCart, products: updatedCart}
+     setUserCart(otherCart)
+     console.log(otherCart)
+  } catch(error){
+      console.error(error)
+  }
+  };
+  const handleCheckout = async (event) =>{
+    try{
+        event.preventDefault()
+       const cartId = userCart.id
+       const finishedCart = await checkoutCart(cartId)
+       navigateNew();
+    } catch(error){
+        console.error(error)
+    }
+}
+ 
 
     useEffect(() => {
       getUser(username)
@@ -25,33 +59,32 @@ const UserCart = (props) => {
         .catch((error) => console.error(error));
       const cartData = async (id) => {
       const cart = await getUserCart(id)
-      console.log(cart)
-        setUserCart(cart)
-        if (cart.id === undefined) {
+        if (cart) {
+          setUserCart(cart)
+        } else {
           setPay(false)
+          }
         }
-      }
-    }, [])
-
-
+    }, [username])
+    
     const total = userCart.products?.map((product) => {
-      console.log(product)
       const cost = product.price
       subTotal += cost
         fee = 3.99;
         totalPrice = subTotal + fee;
+        totalPrice = Math.round(100*totalPrice)/100;
+        return totalPrice;
     })
-    
-    
 
     return (
         <div id = "cart">
             <h1 id="title">{user.username}'s Cart</h1>
             <div>
             {userCart.products?.map ((product) => {
+              const deletedProduct = product.id
               return(
               <div key={product.id} className= "cart-products">
-                  <img src={product.imageURL} id="img"></img>
+                  <img src={product.imageURL} id="img" alt="user-cart"></img>
                 <div>
                 <h3>{product.name}</h3>
                 <p>${product.price}.00</p>
@@ -62,29 +95,29 @@ const UserCart = (props) => {
                 <button id = "minus" className="q-btn">-</button>
                 </div>
                 <br />
-                <button>Remove Item</button>
+                <button onClick={(event) => handleDelete(deletedProduct, event)}>Remove Item</button>
                 </div>
                 </div>
               )
             }
-            )} 
+            )}
             </div>
             <div id="totals">
             <p>Subtotal: ${subTotal}.00</p>
             <p>Delivery Fee: ${fee}</p>
-            <p>Total: ${totalPrice}</p>
+            <p>Total: ${total[total.length-1]}</p>
             </div>
             <div>
             {pay? (
               <button
               id="new-post-button"
               className="m-button"
-              onClick={navigateNew}
+              onClick={handleCheckout}
             >
               Checkout
             </button>
             ): null}
-            </div> 
+            </div>
         </div>
     )
 }

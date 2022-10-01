@@ -5,7 +5,7 @@ import './Products.css'
 const Products = ({products}) => {
     const results = products.map((product) =>{
         return (<div key={product.id} className="product">
-            <Link to={`/products/${product.id}`}><img src={product.imageURL} alt="image of product" /></Link>
+            <Link to={`/products/${product.id}`}><img src={product.imageURL} alt="iproduct" /></Link>
             </div>)
     })
 
