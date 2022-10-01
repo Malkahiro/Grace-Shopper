@@ -9,7 +9,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, setIsAdmin }) => {
       <div id="nav-links">
         <div>
           {isLoggedIn ? (
-            <div>
+            <div id="nav-box">
               <span>
                 <Link to="/products">Home</Link>
               </span>

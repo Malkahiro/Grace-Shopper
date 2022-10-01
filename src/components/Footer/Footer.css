@@ -1,11 +1,12 @@
 #footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: .25rem;
     position: fixed;
     border: 1px solid white;
-    background-color: grey;
+    background-color: #ADA7A7;
     bottom: 0%;
+    width: 100%;
     
 }
 .footer-btns {

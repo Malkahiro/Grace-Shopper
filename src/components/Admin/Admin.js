@@ -6,7 +6,6 @@ const Admin = ({products}) => {
 
 
 return (<div className="products-list">
-<p>Products</p>
 {products.map((product) =>{
     return (<div key={product.id} className="product">
         <Link to={`/editproduct/${product.id}`}><img src={product.imageURL} alt="product" /></Link>

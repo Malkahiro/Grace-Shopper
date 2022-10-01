@@ -79,7 +79,7 @@ const UserCart = (props) => {
     return (
         <div id = "cart">
             <h1 id="title">{user.username}'s Cart</h1>
-            <div>
+            <div className="container">
             {userCart.products?.map ((product) => {
               const deletedProduct = product.id
               return(
@@ -95,7 +95,7 @@ const UserCart = (props) => {
                 <button id = "minus" className="q-btn">-</button>
                 </div>
                 <br />
-                <button onClick={(event) => handleDelete(deletedProduct, event)}>Remove Item</button>
+                <button className="remove" onClick={(event) => handleDelete(deletedProduct, event)}>Remove Item</button>
                 </div>
                 </div>
               )
