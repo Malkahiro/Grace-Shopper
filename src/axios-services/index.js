@@ -157,6 +157,7 @@ export const addProductToCart = async (product) => {
   const token = localStorage.getItem("token");
   if (!token) {
     const cart = localStorage.getItem("products")
+    product.quantity = 1;
     if (cart) {
       const cartProducts = JSON.parse(cart)
       cartProducts.push(product)
@@ -227,11 +228,25 @@ export const checkoutCart = async (cartId) => {
   }
 };
 export async function updateProductQuantity(cartId, productId, quantity) {
-  const response = await fetch(`api/products/${cartId}/${productId}`, {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    const cart = localStorage.getItem("products")
+    const cartProducts = JSON.parse(cart)
+    const updatedProducts = cartProducts.map((product) => {
+      if (product.id === productId) {
+        product.quantity = quantity;
+      }
+      return product;
+    })
+    localStorage.setItem("products", JSON.stringify(updatedProducts))
+       return;
+  }
+  console.log(quantity)
+  const response = await fetch(`api/shopping_cart/${cartId}/${productId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer `,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       quantity: quantity,
