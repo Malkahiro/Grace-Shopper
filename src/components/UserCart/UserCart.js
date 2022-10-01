@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UserCart.css"
 import { getUser, getUserCart, deleteProductFromCart, checkoutCart } from '../../axios-services'
+import Cartitem from "./CartItem";
 
 
 const UserCart = (props) => {
@@ -43,7 +44,16 @@ const UserCart = (props) => {
         console.error(error)
     }
 }
- 
+ const updateCart = (productId, quantity) => {
+  const updatedProducts = userCart.products.map((product) => {
+    if (product.id === productId) {
+      product.quantity = quantity;
+    }
+    return product;
+  })
+  const otherCart = {...userCart, products: updatedProducts}
+  setUserCart(otherCart)
+ }
 
     useEffect(() => {
       getUser(username)
@@ -72,8 +82,9 @@ const UserCart = (props) => {
     }, [username])
     
     const total = userCart.products?.map((product) => {
-      const cost = product.price
+      const cost = (product.price * product.quantity)
       subTotal += cost
+      console.log(cost)
         fee = 3.99;
         totalPrice = subTotal + fee;
         totalPrice = Math.round(100*totalPrice)/100;
@@ -85,31 +96,8 @@ const UserCart = (props) => {
             <h1 id="title">{username || "Guest"}'s Cart</h1>
             <div>
             {userCart.products?.map ((product) => {
-              const deletedProduct = product.id
-              return(
-              <div key={product.id} className= "cart-products">
-                  <img src={product.imageURL} id="img" alt="user-cart"></img>
-                <div>
-                <h3>{product.name}</h3>
-                <p>${product.price}.00</p>
-                <p>{product.creator}</p>
-                <label className="postTitles">Quantity: </label>
-            <br />
-            <input
-              size={"3"}
-              minLength={1}
-              type="text"
-              title="name"
-              required
-            />
-                <div id = "quantity">
-                <button id = "update-quantity" className="btn">Update Quantity</button>
-                </div>
-                <br />
-                <button className="remove" onClick={(event) => handleDelete(deletedProduct, event)}>Remove Item</button>
-                </div>
-                </div>
-              )
+              console.log(userCart)
+              return <Cartitem product={product} handleDelete={handleDelete} cartId={userCart.id} updateCart={updateCart}></Cartitem>
             }
             )}
             </div>

@@ -80,7 +80,7 @@ async function attatchProductsToCart(cart) {
     try {
 
         const {rows} = await client.query(`
-          SELECT products.*
+          SELECT products.*, cart_products.quantity 
           FROM products
           JOIN cart_products ON cart_products."productId" = products.id
           WHERE cart_products."cartId" = $1
@@ -116,12 +116,13 @@ async function getUserCart(id) {
 
 async function updateProductQuantity(cartId, productId, quantity){
     try{
-        await client.query(`
+        const updatedProduct = await client.query(`
         UPDATE cart_products
         SET quantity=($3)
         WHERE "cartId" = ($1) AND "productId" = ($2)
         RETURNING *
         `, [cartId, productId, quantity])
+        return updatedProduct;
     } catch (error) {
         throw(error)
     }
