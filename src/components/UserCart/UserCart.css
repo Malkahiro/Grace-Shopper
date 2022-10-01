@@ -6,6 +6,12 @@
 }
 .cart-products {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    max-width: 50%;
+    min-width: 312px;
     padding: 1rem;
     border-bottom: solid black 1px;
     margin: .5rem
@@ -30,4 +36,11 @@
     height:30px;
     width: 30px;
     margin: .5rem;
+    padding: 10px;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }

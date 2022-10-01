@@ -106,7 +106,7 @@ const UserCart = (props) => {
                 <button id = "update-quantity" className="btn">Update Quantity</button>
                 </div>
                 <br />
-                <button onClick={(event) => handleDelete(deletedProduct, event)}>Remove Item</button>
+                <button className="remove" onClick={(event) => handleDelete(deletedProduct, event)}>Remove Item</button>
                 </div>
                 </div>
               )

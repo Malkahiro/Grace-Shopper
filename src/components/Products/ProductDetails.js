@@ -1,6 +1,7 @@
 import React from "react";
 import {Link, useParams} from 'react-router-dom'
 import SingleProduct from "./SingleProduct";
+import './ProductDetails.css'
 
 
 
@@ -13,7 +14,7 @@ const detailedProduct = products.filter((product) => {
 });
 
     return ( 
-    <div>
+    <div className="details">
      {detailedProduct?.length && <SingleProduct detailedProduct={detailedProduct[0]} />}
       <Link to={'/products'}>Back to products</Link>
     </div> );
