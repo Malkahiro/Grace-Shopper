@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Register.css"
+import "../Login/Login.css"
 
 
 const Register = (props) => {
@@ -34,59 +34,54 @@ const Register = (props) => {
   };
 
   return (
-    <div className="main-reg">
+    <div className="main-reg" id="login-box">
       <main className="form-signin w-100 m-auto">
           <form onSubmit={submit}>
           <h1 id="reg-header" className="h3 mb-3 fw-normal">
             Register Account
           </h1>
           <div className="form-floating">
-          <label htmlFor="floatingInput">Username</label>
+          <label htmlFor="floatingInput" className="label">Username</label>
             <input
               type="text"
               className="form-control"
               id="floatingInput"
-              placeholder="username"
               onChange={(event) => setUsername(event.target.value)}
             />
           </div>
           <div className="form-floating">
-          <label htmlFor="floatingInput">Name</label>
+          <label htmlFor="floatingInput" className="label">Name</label>
             <input
               type="text"
               className="form-control"
               id="floatingInput"
-              placeholder="username"
               onChange={(event) => setName(event.target.value)}
             />
           </div>
           <div className="form-floating">
-          <label htmlFor="floatingInput">Email</label>
+          <label htmlFor="floatingInput" className="label">Email</label>
             <input
               type="text"
               className="form-control"
               id="floatingInput"
-              placeholder="username"
               onChange={(event) => setEmail(event.target.value)}
             />
           </div>
           <div className="form-floating">
-          <label htmlFor="floatingInput">Address</label>
+          <label htmlFor="floatingInput" className="label">Address</label>
             <input
               type="text"
               className="form-control"
               id="floatingInput"
-              placeholder="username"
               onChange={(event) => setAddress(event.target.value)}
             />
           </div>
           <div className="form-floating">
-          <label htmlFor="floatingInput">Password</label>
+          <label htmlFor="floatingInput" className="label">Password</label>
             <input
               type="password"
               className="form-control"
               id="floatingPassword"
-              placeholder="Password"
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>

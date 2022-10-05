@@ -34,29 +34,27 @@ const Login = (props) => {
     navigate("/products");
   };
   return (
-    <div className="main-login">
+    <div className="main-login" id="login-box">
       <main className="form-signin w-100 m-auto">
       <form onSubmit={submit}>
           <h1 id="login-header" className="h3 mb-3 fw-normal">
             Login To Account
           </h1>
           <div className="form-floating">
-          <label htmlFor="floatingInput">Username</label>
+          <label htmlFor="floatingInput" className="label" id="user-label">Username  </label>
             <input
               type="text"
               className="form-control"
               id="floatingInput"
-              placeholder="username"
               onChange={(event) => setUsername(event.target.value)}
             />
           </div>
           <div className="form-floating">
-          <label htmlFor="floatingPassword">Password</label>
+          <label htmlFor="floatingPassword" className="label">Password  </label>
             <input
               type="password"
               className="form-control"
               id="floatingPassword"
-              placeholder="Password"
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>

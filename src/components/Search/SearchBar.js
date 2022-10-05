@@ -20,7 +20,6 @@ const SearchBar = ({products, setSearchResults}) => {
         <header>
             <form className="search" onSubmit={handleSubmit}>
                 <input type="text" className="search__input" id="search"  onChange={handleSearchChange}/>
-                <button className="search__button"></button>
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
             </form>
         </header>

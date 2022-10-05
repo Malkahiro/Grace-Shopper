@@ -4,7 +4,7 @@ import './DropDown.css'
 
 const DropDown = () => {
     return ( <div className="dropdown">
-        <button className="dropbtn">Type</button>
+        <button className="dropbtn">Media Type</button>
         <div className="dropdown-content">
         <Link to={'/products'}>All</Link>
         <Link to={'/products/books'}>Books</Link>

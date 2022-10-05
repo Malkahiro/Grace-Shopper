@@ -1,17 +1,10 @@
-/* #main-login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-image: ('https://i.guim.co.uk/img/media/423d3ddf306e98864c1d887c1dcf290421cd21a7/0_169_4912_6140/master/4912.jpg?width=700&quality=85&auto=format&fit=max&s=864393ed1c322fc5ddcb2766c3c945e6') ;
-    box-shadow: 2px 2px 10px rgb(93, 106, 119);
-    padding: 20px;
-    width: 550px;
-    height: 200px;
-} */
+
+#login-box{
+  display: flex;
+  justify-content: center;
+}
 
 form {
-  border: 3px solid black;
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -20,7 +13,7 @@ form {
   }
 
   button {
-  background-color: #0415aa;
+  background-color: #42C0D2;
   color: #fff;
   padding: 14px 20px;
   margin: 8px 0;
@@ -29,11 +22,25 @@ form {
   width: 100%;
   }
 
-  .container {
+.container {
     padding: 16px;
   }
- 
-  
+.form-floating {
+  margin: .5rem;
+  padding: .5rem;
+}
+.form-control{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 4rem;
+}
+.label{
+  display: flex;
+  justify-content: center;
+  margin-bottom: .5rem;
+}
+
 /* //style for buttons on small screens */
 @media screen and (max-width: 300px) {
 
