@@ -141,3 +141,7 @@ As you project grows you'll probably want to re-seed and refresh your database f
 # Wrapup
 
 You'll be able to view your fullstack application by running `heroku open`. Bask in the glory of your live site, and happy coding!
+
+
+
+Gungan Gifts is a Naboo based  online marketplace, and is designed to allow customers to shop some of their favorite movie and book titles. Whether the customer is obliged to purchase their items as a guest of the site or as a registered user is completely up to the customer. Use the menu links in the navigation bar to jump between links. The customer is also able to edit their cart before checkout, just in case they want to add or subtract from an item's quantity or whether they want to remove an item entirely. We hope your user experience is out of this world! May the Force be with you.
